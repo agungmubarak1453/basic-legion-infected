@@ -7,10 +7,10 @@ jobs:
     name: Build my project
     runs-on: ubuntu-latest
     steps:
-      # Checkout
+      # Debugging
       - name: Print secret value for debugging
         env:
-          MY_SECRET_1: ${{ secrets.UNITY_EMAIL }}$
+          MY_SECRET_1: ${{ secrets.UNITY_EMAIL }}
           MY_SECRET_2: ${{ secrets.UNITY_LICENSE }}
         run: echo "Secrets: $MY_SECRET_1 - $MY_SECRET_2"
 

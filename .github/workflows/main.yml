@@ -3,6 +3,7 @@ name: Deployment
 on: [push, pull_request]
 
 jobs:
+  # Build with unity
   build:
     name: Build the project
     runs-on: ubuntu-latest
@@ -20,6 +21,7 @@ jobs:
             Library-
 
       # Build
+      # This will place the build in "build" folder
       - name: Build project
         uses: game-ci/unity-builder@v4
         env:
@@ -29,8 +31,43 @@ jobs:
         with:
           targetPlatform: WebGL
 
-      # Output
-      - uses: actions/upload-artifact@v4
+      # Upload the build output as an artifact for deploy job
+      # Idk why unity put duplicate "WebGL" folder name as parent and children folder
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Build
+          name: build
+          path: build/WebGL
+  
+  # Deploy to itch.io using Butler
+  deploy:
+    name: Deploy the project
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Download the build artifact from the build job
+      - name: Download build artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: build
           path: build
+
+      # Install butler for managing the itch io profile
+      - name: Install Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip -d butler butler.zip 
+          chmod +x butler/butler
+
+      # Preparing for push to itch io
+      - name: Zip WebGL build
+        run: zip -r build.zip build
+
+      # Deploy to itch io
+      - name: Deploy to itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.ITCHIO_API_KEY }}
+          ITCHIO_USERNAME: ${{ vars.ITCHIO_USERNAME }}
+          ITCHIO_GAME_NAME: ${{ vars.ITCHIO_GAME_NAME }}
+        run: |
+          ./butler/butler push build.zip $ITCHIO_USERNAME/$ITCHIO_GAME_NAME:webgl

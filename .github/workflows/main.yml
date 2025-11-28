@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Debugging
-      - name: Print secret value for debugging
+      - name: Print secret value for debugging (masked)
         env:
           MY_SECRET_1: ${{ secrets.UNITY_EMAIL }}
           MY_SECRET_2: ${{ secrets.UNITY_LICENSE }}

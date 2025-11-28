@@ -7,37 +7,30 @@ jobs:
     name: Build my project
     runs-on: ubuntu-latest
     steps:
-      # Debugging
-      - name: Print secret value for debugging (masked)
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cache
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # Build
+      - name: Build project
+        uses: game-ci/unity-builder@v4
         env:
-          MY_SECRET_1: ${{ secrets.UNITY_EMAIL }}
-          MY_SECRET_2: ${{ secrets.UNITY_LICENSE }}
-        run: echo "Secrets: $MY_SECRET_1 - $MY_SECRET_2"
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
 
-      # # Checkout
-      # - name: Checkout repository
-      #   uses: actions/checkout@v4
-
-      # # Cache
-      # - uses: actions/cache@v3
-      #   with:
-      #     path: Library
-      #     key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-      #     restore-keys: |
-      #       Library-
-
-      # # Build
-      # - name: Build project
-      #   uses: game-ci/unity-builder@v4
-      #   env:
-      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-      #   with:
-      #     targetPlatform: WebGL
-
-      # # Output
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: Build
-      #     path: build
+      # Output
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Build
+          path: build

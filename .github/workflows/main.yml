@@ -77,4 +77,4 @@ jobs:
           CHANNEL: webgl
           ITCH_GAME: ${{ vars.ITCHIO_GAME_NAME }}
           ITCH_USER: ${{ vars.ITCHIO_USERNAME }}
-          PACKAGE: build.zip
+          PACKAGE: build

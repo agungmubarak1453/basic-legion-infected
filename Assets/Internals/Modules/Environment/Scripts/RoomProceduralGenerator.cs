@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace BasicLegionInfected.Game
+namespace BasicLegionInfected.Environment
 {
     public class RoomProceduralGenerator
     {
 		private Tilemap _tilemap;
 
-		private Tile _wallTile;
-		private Tile _doorTile;
+		private ITilemapObject _wallTile;
+		private ITilemapObject _doorTile;
 
 		// For precedural generation
 		private int _levelWidth = 50;
@@ -21,8 +21,9 @@ namespace BasicLegionInfected.Game
 
 		public List<RectInt> Rooms { get; private set; } = new();
 
-		public RoomProceduralGenerator(Tilemap tilemap, Tile wallTile, Tile doorTile) {
+		public RoomProceduralGenerator(Tilemap tilemap, ITilemapObject wallTile, ITilemapObject doorTile) {
 			_tilemap = tilemap;
+
 			_wallTile = wallTile;
 			_doorTile = doorTile;
         }
@@ -76,14 +77,14 @@ namespace BasicLegionInfected.Game
 		{
 			for (int x = room.xMin; x <= room.xMax; x++)
 			{
-				_tilemap.SetTile(new Vector3Int(x, room.yMin, 0), _wallTile);
-				_tilemap.SetTile(new Vector3Int(x, room.yMax, 0), _wallTile);
+				_wallTile.SetPosition(_tilemap, new(x, room.yMin, 0));
+				_wallTile.SetPosition(_tilemap, new(x, room.yMax, 0));
 			}
 
 			for (int y = room.yMin; y <= room.yMax; y++)
 			{
-				_tilemap.SetTile(new Vector3Int(room.xMin, y, 0), _wallTile);
-				_tilemap.SetTile(new Vector3Int(room.xMax, y, 0), _wallTile);
+				_wallTile.SetPosition(_tilemap, new(room.xMin, y, 0));
+				_wallTile.SetPosition(_tilemap, new(room.xMax, y, 0));
 			}
 		}
 
@@ -185,13 +186,13 @@ namespace BasicLegionInfected.Game
 			// Draw walls on corridor edges (outer border of corridor rectangle)
 			for (int x = xMin; x <= xMax; x++)
 			{
-				_tilemap.SetTile(new Vector3Int(x, yMin, 0), _wallTile);
-				_tilemap.SetTile(new Vector3Int(x, yMax, 0), _wallTile);
+				_wallTile.SetPosition(_tilemap, new(x, yMin, 0));
+				_wallTile.SetPosition(_tilemap, new(x, yMax, 0));
 			}
 			for (int y = yMin; y <= yMax; y++)
 			{
-				_tilemap.SetTile(new Vector3Int(xMin, y, 0), _wallTile);
-				_tilemap.SetTile(new Vector3Int(xMax, y, 0), _wallTile);
+				_wallTile.SetPosition(_tilemap, new(xMin, y, 0));
+				_wallTile.SetPosition(_tilemap, new(xMax, y, 0));
 			}
 
 			// Place door tiles at corridor entrances:
@@ -202,14 +203,14 @@ namespace BasicLegionInfected.Game
 			else if (start.x == roomStart.xMax) startDoorPos.x -= 1;
 			else if (start.y == roomStart.yMin) startDoorPos.y += 1;
 			else if (start.y == roomStart.yMax) startDoorPos.y -= 1;
-			_tilemap.SetTile(startDoorPos, _doorTile);
+			_doorTile.SetPosition(_tilemap, startDoorPos);
 
 			Vector3Int endDoorPos = end;
 			if (end.x == roomEnd.xMin) endDoorPos.x += 1;
 			else if (end.x == roomEnd.xMax) endDoorPos.x -= 1;
 			else if (end.y == roomEnd.yMin) endDoorPos.y += 1;
 			else if (end.y == roomEnd.yMax) endDoorPos.y -= 1;
-			_tilemap.SetTile(endDoorPos, _doorTile);
+			_doorTile.SetPosition(_tilemap, endDoorPos);
 		}
 	}
 }

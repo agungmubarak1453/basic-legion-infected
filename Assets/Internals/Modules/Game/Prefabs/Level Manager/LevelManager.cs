@@ -1,17 +1,20 @@
 using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
+
+using AYellowpaper;
+
+using BasicLegionInfected.Environment;
 
 namespace BasicLegionInfected.Game
 {
 	public class LevelManager : MonoBehaviour
 	{
-		[SerializeField] private Tile _wallTile;
-		[SerializeField] private Tile _doorTile;
+		[SerializeField] private InterfaceReference<ITilemapObject> _wallTile;
+		[SerializeField] private InterfaceReference<ITilemapObject> _doorTile;
 
 		[SerializeField] private GameObject _personPrefab;
-
 
 		[SerializeField] private Tilemap _tilemap;
 
@@ -20,7 +23,7 @@ namespace BasicLegionInfected.Game
 
 		public void LoadLevel()
 		{
-			_roomProceduralGenerator = new(_tilemap, _wallTile, _doorTile);
+			_roomProceduralGenerator = new(_tilemap, _wallTile.Value, _doorTile.Value);
 
 			GenerateEnvironment();
 			PlaceObjects();

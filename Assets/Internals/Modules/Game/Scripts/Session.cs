@@ -16,8 +16,6 @@ namespace BasicLegionInfected.Game
         public void Start()
         {
             _levelManager.LoadLevel();
-
-			throw new NotImplementedException();
 		}
 
         public void Close()

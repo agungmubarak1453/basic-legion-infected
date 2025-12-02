@@ -71,23 +71,13 @@ jobs:
         with:
           name: build
           path: build
-
-      # Install butler for managing the itch io profile
-      - name: Install Butler
-        run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip -d butler butler.zip 
-          chmod +x butler/butler
-
-      # Preparing for push to itch io
-      - name: Zip WebGL build
-        run: zip -r build.zip build
-
+          
       # Deploy to itch io
       - name: Deploy to itch.io
+        uses: yeslayla/butler-publish-itchio-action@master
         env:
-          BUTLER_API_KEY: ${{ secrets.ITCHIO_API_KEY }}
-          ITCHIO_USERNAME: ${{ vars.ITCHIO_USERNAME }}
-          ITCHIO_GAME_NAME: ${{ vars.ITCHIO_GAME_NAME }}
-        run: |
-          ./butler/butler push build.zip $ITCHIO_USERNAME/$ITCHIO_GAME_NAME:webgl
+          BUTLER_CREDENTIALS: ${{ secrets.ITCHIO_API_KEY }}
+          CHANNEL: webgl
+          ITCH_GAME: ${{ vars.ITCHIO_GAME_NAME }}
+          ITCH_USER: ${{ vars.ITCHIO_USERNAME }}
+          PACKAGE: build.zip

@@ -3,34 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using AYellowpaper;
+
 namespace BasicLegionInfected.Environment
 {
-    public class RoomProceduralGenerator
+    public class RoomProceduralGenerator : MonoBehaviour
     {
-		private Tilemap _tilemap;
+		[SerializeField] private Tilemap _tilemap;
 
-		private ITilemapObject _wallTile;
-		private ITilemapObject _doorTile;
+		[SerializeField] private InterfaceReference<ITilemapObjectSpawner> _wallTileSpawner;
+		[SerializeField] private InterfaceReference<ITilemapObjectSpawner> _doorTileSpawner;
 
 		// For precedural generation
-		private int _levelWidth = 50;
-		private int _levelHeight = 50;
-		private int _roomMinSize = 5;
-		private int _roomMaxSize = 10;
-		private int _roomCount = 5;
+		public int LevelWidth = 50;
+		public int LevelHeight = 50;
+		public int RoomMinSize = 5;
+		public int RoomMaxSize = 10;
+		public int RoomCount = 5;
 
 		public List<RectInt> Rooms { get; private set; } = new();
 
-		public RoomProceduralGenerator(Tilemap tilemap, ITilemapObject wallTile, ITilemapObject doorTile) {
-			_tilemap = tilemap;
-
-			_wallTile = wallTile;
-			_doorTile = doorTile;
-        }
-
 		public RectInt[] Generate()
 		{
-			_tilemap.ClearAllTiles();
+			_wallTileSpawner.Value.DestroyAllObjects();
+			_doorTileSpawner.Value.DestroyAllObjects();
+
 			Rooms.Clear();
 
 			GenerateRooms();
@@ -41,13 +38,13 @@ namespace BasicLegionInfected.Environment
 
 		private void GenerateRooms()
 		{
-			for (int i = 0; i < _roomCount; i++)
+			for (int i = 0; i < RoomCount; i++)
 			{
-				int width = Random.Range(_roomMinSize, _roomMaxSize + 1);
-				int height = Random.Range(_roomMinSize, _roomMaxSize + 1);
+				int width = Random.Range(RoomMinSize, RoomMaxSize + 1);
+				int height = Random.Range(RoomMinSize, RoomMaxSize + 1);
 
-				int maxXDistance = (_levelWidth + width) / 2;
-				int maxYDistance = (_levelHeight + height) / 2;
+				int maxXDistance = (LevelWidth + width) / 2;
+				int maxYDistance = (LevelHeight + height) / 2;
 
 				int x = Random.Range(-maxXDistance, maxXDistance);
 				int y = Random.Range(-maxYDistance, maxYDistance);
@@ -77,14 +74,14 @@ namespace BasicLegionInfected.Environment
 		{
 			for (int x = room.xMin; x <= room.xMax; x++)
 			{
-				_wallTile.SetPosition(_tilemap, new(x, room.yMin, 0));
-				_wallTile.SetPosition(_tilemap, new(x, room.yMax, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(x, room.yMin, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(x, room.yMax, 0));
 			}
 
 			for (int y = room.yMin; y <= room.yMax; y++)
 			{
-				_wallTile.SetPosition(_tilemap, new(room.xMin, y, 0));
-				_wallTile.SetPosition(_tilemap, new(room.xMax, y, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(room.xMin, y, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(room.xMax, y, 0));
 			}
 		}
 
@@ -186,13 +183,13 @@ namespace BasicLegionInfected.Environment
 			// Draw walls on corridor edges (outer border of corridor rectangle)
 			for (int x = xMin; x <= xMax; x++)
 			{
-				_wallTile.SetPosition(_tilemap, new(x, yMin, 0));
-				_wallTile.SetPosition(_tilemap, new(x, yMax, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(x, yMin, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(x, yMax, 0));
 			}
 			for (int y = yMin; y <= yMax; y++)
 			{
-				_wallTile.SetPosition(_tilemap, new(xMin, y, 0));
-				_wallTile.SetPosition(_tilemap, new(xMax, y, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(xMin, y, 0));
+				_wallTileSpawner.Value.SpawnObject(_tilemap, new(xMax, y, 0));
 			}
 
 			// Place door tiles at corridor entrances:
@@ -203,14 +200,14 @@ namespace BasicLegionInfected.Environment
 			else if (start.x == roomStart.xMax) startDoorPos.x -= 1;
 			else if (start.y == roomStart.yMin) startDoorPos.y += 1;
 			else if (start.y == roomStart.yMax) startDoorPos.y -= 1;
-			_doorTile.SetPosition(_tilemap, startDoorPos);
+			_doorTileSpawner.Value.SpawnObject(_tilemap, startDoorPos);
 
 			Vector3Int endDoorPos = end;
 			if (end.x == roomEnd.xMin) endDoorPos.x += 1;
 			else if (end.x == roomEnd.xMax) endDoorPos.x -= 1;
 			else if (end.y == roomEnd.yMin) endDoorPos.y += 1;
 			else if (end.y == roomEnd.yMax) endDoorPos.y -= 1;
-			_doorTile.SetPosition(_tilemap, endDoorPos);
+			_doorTileSpawner.Value.SpawnObject(_tilemap, endDoorPos);
 		}
 	}
 }

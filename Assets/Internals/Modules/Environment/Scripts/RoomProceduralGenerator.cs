@@ -192,14 +192,16 @@ namespace BasicLegionInfected.Environment
 				_wallTileSpawner.Value.SpawnObject(_tilemap, new(xMax, y, 0));
 			}
 
-			// Place door tiles at corridor entrances:
-			// Door at corridor start: offset by 1 tile toward corridor if wall on edge
+			// Place door tiles at corridor entrances
+			// First remove wall tile on those entrances
+			// Door at corridor start offset by 1 tile toward corridor if wall on edge
 
 			Vector3Int startDoorPos = start;
 			if (start.x == roomStart.xMin) startDoorPos.x += 1;
 			else if (start.x == roomStart.xMax) startDoorPos.x -= 1;
 			else if (start.y == roomStart.yMin) startDoorPos.y += 1;
 			else if (start.y == roomStart.yMax) startDoorPos.y -= 1;
+			_tilemap.SetTile(startDoorPos, null);
 			_doorTileSpawner.Value.SpawnObject(_tilemap, startDoorPos);
 
 			Vector3Int endDoorPos = end;
@@ -207,6 +209,7 @@ namespace BasicLegionInfected.Environment
 			else if (end.x == roomEnd.xMax) endDoorPos.x -= 1;
 			else if (end.y == roomEnd.yMin) endDoorPos.y += 1;
 			else if (end.y == roomEnd.yMax) endDoorPos.y -= 1;
+			_tilemap.SetTile(endDoorPos, null);
 			_doorTileSpawner.Value.SpawnObject(_tilemap, endDoorPos);
 		}
 	}

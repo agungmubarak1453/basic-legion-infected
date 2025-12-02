@@ -11,20 +11,15 @@ namespace BasicLegionInfected.Game
 {
 	public class LevelManager : MonoBehaviour
 	{
-		[SerializeField] private InterfaceReference<ITilemapObject> _wallTile;
-		[SerializeField] private InterfaceReference<ITilemapObject> _doorTile;
-
 		[SerializeField] private GameObject _personPrefab;
 
 		[SerializeField] private Tilemap _tilemap;
+		[SerializeField] private RoomProceduralGenerator _roomProceduralGenerator;
 
-		private RoomProceduralGenerator _roomProceduralGenerator;
 		private List<GameObject> _objects = new();
 
 		public void LoadLevel()
 		{
-			_roomProceduralGenerator = new(_tilemap, _wallTile.Value, _doorTile.Value);
-
 			GenerateEnvironment();
 			PlaceObjects();
 		}

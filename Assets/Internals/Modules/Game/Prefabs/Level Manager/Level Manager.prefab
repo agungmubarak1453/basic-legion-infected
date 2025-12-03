@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df12688557909db47ba92b6b1be2f2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _personPrefab: {fileID: 0}
+  _personSpawner:
+    _underlyingValue: {fileID: 742392149250864583}
   _tilemap: {fileID: 0}
   _roomProceduralGenerator: {fileID: 529793058502353597}
 --- !u!114 &529793058502353597
@@ -82,6 +83,7 @@ GameObject:
   - component: {fileID: 7967786885705941979}
   - component: {fileID: 1874901646149343931}
   - component: {fileID: 8898756988160848634}
+  - component: {fileID: 742392149250864583}
   m_Layer: 0
   m_Name: Spawner Container
   m_TagString: Untagged
@@ -130,3 +132,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 2317574746785603490, guid: 17fb6f0ac19776b4c8a0e1504538cc2b, type: 3}
+--- !u!114 &742392149250864583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5564750847038790485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a185b1470a1d3904797cb10b46572173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 3819542639225032753, guid: d5a357d5baf59f24ba7ff7c58d8db392, type: 3}

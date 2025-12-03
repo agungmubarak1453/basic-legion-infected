@@ -11,12 +11,10 @@ namespace BasicLegionInfected.Game
 {
 	public class LevelManager : MonoBehaviour
 	{
-		[SerializeField] private GameObject _personPrefab;
+		[SerializeField] private InterfaceReference<ITilemapObjectSpawner> _personSpawner;
 
 		[SerializeField] private Tilemap _tilemap;
 		[SerializeField] private RoomProceduralGenerator _roomProceduralGenerator;
-
-		private List<GameObject> _objects = new();
 
 		public void LoadLevel()
 		{
@@ -31,24 +29,18 @@ namespace BasicLegionInfected.Game
 
 		private void PlaceObjects()
 		{
-			foreach (GameObject _object in _objects)
-			{
-				Destroy(_object);
-			}
-
-			_objects.Clear();
-
 			PlacePerson();
 		}
 
 		private void PlacePerson()
 		{
+			_personSpawner.Value.DestroyAllObjects();
+
 			foreach (RectInt room in _roomProceduralGenerator.Rooms)
 			{
-				Vector2 spawnPosition = room.center;
-				GameObject person = GameObject.Instantiate(_personPrefab, spawnPosition, Quaternion.identity);
+				Vector3Int spawnPosition = new((int)room.center.x, (int)room.center.y, 0);
 
-				_objects.Add(person);
+				_personSpawner.Value.SpawnObject(_tilemap, spawnPosition);
 			}
 
 			Debug.Log("Mock PlacePerson");

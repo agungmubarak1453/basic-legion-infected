@@ -12,18 +12,18 @@ namespace BasicLegionInfected.Game
 
 		public virtual void Initialize(EffectData effectData)
 		{
-			if(effectData.Duration < 0)
+			if(effectData.DurationSecond < 0)
 			{
 				_isPermanent = true;
 			}
 
 			if (effectData.IsDurationStacked)
 			{
-				_timer += effectData.Duration;
+				_timer += effectData.DurationSecond;
 			}
 			else
 			{
-				_timer = effectData.Duration;
+				_timer = effectData.DurationSecond;
 			}
 		}
 

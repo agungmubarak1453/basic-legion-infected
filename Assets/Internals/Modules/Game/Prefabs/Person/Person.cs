@@ -49,7 +49,7 @@ namespace BasicLegionInfected.Game
 
 			if (!_canDetect) return;
 
-			RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _detectionRadius, Vector2.down);
+			RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _detectionRadius, Vector2.zero);
 
 			foreach (RaycastHit2D hit in hits)
 			{

@@ -8,20 +8,20 @@ namespace BasicLegionInfected.Game
 {
     public class EffectManager : MonoBehaviour
     {
-        public Dictionary<EffectData, AEffect> _effects = new();
+        public Dictionary<EffectData, AEffect> Effects { get; private set; } = new();
 
 		private void Update()
 		{
-			foreach (AEffect effect in _effects.Values)
+			foreach (AEffect effect in Effects.Values)
 			{
 				effect.Tick(Time.deltaTime);
 				effect.ApplyTick();
 			}
 		}
 
-		private void AddEffect(EffectData effectData)
+		public void AddEffect(EffectData effectData)
 		{
-			AEffect effect = _effects[effectData];
+			AEffect effect = Effects[effectData];
 
 			if (effectData.IsEffectStacked && effect != null)
 			{
@@ -30,16 +30,16 @@ namespace BasicLegionInfected.Game
 			}
 			else
 			{
-				_effects[effectData] = effectData.Initialize(gameObject);
+				Effects[effectData] = effectData.Initialize(gameObject);
 
-				effect = _effects[effectData];
+				effect = Effects[effectData];
 				effect.ApplyEffect();
 			}
 		}
 
-		private void RemoveEffect(EffectData effectData) {
-			_effects[effectData]?.End();
-			_effects.Remove(effectData);
+		public void RemoveEffect(EffectData effectData) {
+			Effects[effectData]?.End();
+			Effects.Remove(effectData);
 		}
 	}
 }

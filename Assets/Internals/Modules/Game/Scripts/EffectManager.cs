@@ -21,7 +21,7 @@ namespace BasicLegionInfected.Game
 
 		public void AddEffect(EffectData effectData)
 		{
-			AEffect effect = Effects[effectData];
+			AEffect effect = Effects.GetValueOrDefault(effectData);
 
 			if (effectData.IsEffectStacked && effect != null)
 			{

@@ -8,7 +8,7 @@ namespace BasicLegionInfected.Game
     public class EffectData : ScriptableObject
     {
         public GameObject EffectPrefab;
-        public float Duration;
+        [Tooltip("Use -1 for permanent effect")] public float Duration;
         public bool IsDurationStacked;
         public bool IsEffectStacked;
 

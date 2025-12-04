@@ -7,20 +7,23 @@ namespace BasicLegionInfected.Game
 {
     public abstract class AEffect : MonoBehaviour
     {
-		public float Duration;
-
+		private bool _isPermanent = false;
 		private float _timer;
 
 		public virtual void Initialize(EffectData effectData)
 		{
-			Duration = effectData.Duration;
+			if(effectData.Duration < 0)
+			{
+				_isPermanent = true;
+			}
+
 			if (effectData.IsDurationStacked)
 			{
-				_timer += Duration;
+				_timer += effectData.Duration;
 			}
 			else
 			{
-				_timer = Duration;
+				_timer = effectData.Duration;
 			}
 		}
 
@@ -29,6 +32,8 @@ namespace BasicLegionInfected.Game
 
 		public virtual void Tick(float deltaSecond)
 		{
+			if (_isPermanent) return;
+
 			_timer -= deltaSecond;
 			
 			if (_timer < 0)

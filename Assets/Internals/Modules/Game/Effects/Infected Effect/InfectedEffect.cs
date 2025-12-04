@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace BasicLegionInfected.Game.Infected
 		[SerializeField] private EffectData InfectedEffectData;
 		private Collider2D _effectedCollider;
 
-		public float DetectionRadius = 1.5f;
+		public float DetectionRadius = 2f;
 
 		public override void Activate()
 		{
@@ -24,20 +25,28 @@ namespace BasicLegionInfected.Game.Infected
 
 		public override void ApplyTick()
 		{
+			
+		}
+
+		public override void ApplyFixedTick()
+		{
 			RaycastHit2D[] hits = Physics2D.CircleCastAll(
 				_effectedCollider.transform.position, DetectionRadius, Vector2.zero
 			);
 
 			foreach (RaycastHit2D hit in hits)
 			{
+				if (hit.collider == _effectedCollider) continue;
+
+				Debug.Log($"InfectedEffect from {transform.parent.name} touch {hit.collider.name}");
+
 				EffectManager effectManager = hit.collider.GetComponentInChildren<EffectManager>();
 
-				if (effectManager.Effects.GetValueOrDefault(InfectedEffectData) != null)
+				if (effectManager != null && effectManager.Effects.GetValueOrDefault(InfectedEffectData) == null)
 				{
 					effectManager.AddEffect(InfectedEffectData);
 				}
 			}
 		}
-
 	}
 }

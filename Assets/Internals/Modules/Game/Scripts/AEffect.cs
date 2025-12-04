@@ -43,6 +43,7 @@ namespace BasicLegionInfected.Game
 		}
 
 		public abstract void ApplyTick();
+		public abstract void ApplyFixedTick();
 
 		public virtual void End()
 		{

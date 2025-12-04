@@ -9,7 +9,7 @@ namespace BasicLegionInfected.Game
 
 		private void Start()
 		{
-			SpriteRenderer spriteRenderer = transform.GetComponentInChildren<SpriteRenderer>();
+			SpriteRenderer spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 
 			spriteRenderer.color = _infectedColor;
 		}

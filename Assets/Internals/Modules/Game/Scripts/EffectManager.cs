@@ -19,6 +19,14 @@ namespace BasicLegionInfected.Game
 			}
 		}
 
+		private void FixedUpdate()
+		{
+			foreach (AEffect effect in Effects.Values)
+			{
+				effect.ApplyFixedTick();
+			}
+		}
+
 		public void AddEffect(EffectData effectData)
 		{
 			AEffect effect = Effects.GetValueOrDefault(effectData);
@@ -33,6 +41,7 @@ namespace BasicLegionInfected.Game
 				Effects[effectData] = effectData.Initialize(gameObject);
 
 				effect = Effects[effectData];
+				effect.Activate();
 				effect.ApplyEffect();
 			}
 		}

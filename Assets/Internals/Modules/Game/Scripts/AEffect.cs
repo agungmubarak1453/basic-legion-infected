@@ -39,7 +39,6 @@ namespace BasicLegionInfected.Game
 			if (_timer < 0)
 			{
 				End();
-				return;
 			}
 		}
 

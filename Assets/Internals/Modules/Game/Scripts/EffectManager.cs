@@ -47,7 +47,13 @@ namespace BasicLegionInfected.Game
 		}
 
 		public void RemoveEffect(EffectData effectData) {
-			Effects[effectData]?.End();
+			AEffect effect = Effects.GetValueOrDefault(effectData);
+
+			if (effect == null) {
+				return;
+			}
+
+			effect.End();
 			Effects.Remove(effectData);
 		}
 	}

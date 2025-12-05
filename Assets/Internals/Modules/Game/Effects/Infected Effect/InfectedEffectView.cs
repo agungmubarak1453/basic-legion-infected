@@ -6,12 +6,20 @@ namespace BasicLegionInfected.Game
     {
 		[SerializeField] public Color _infectedColor;
 
+		private SpriteRenderer _spriteRenderer;
+		private Color _oldColor;
 
 		private void Start()
 		{
-			SpriteRenderer spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
+			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 
-			spriteRenderer.color = _infectedColor;
+			_oldColor = _spriteRenderer.color;
+			_spriteRenderer.color = _infectedColor;
+		}
+
+		private void OnDestroy()
+		{
+			_spriteRenderer.color = _oldColor;
 		}
 	}
 }

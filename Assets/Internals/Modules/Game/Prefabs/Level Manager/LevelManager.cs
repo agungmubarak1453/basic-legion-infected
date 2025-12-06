@@ -16,6 +16,13 @@ namespace BasicLegionInfected.Game
 		[SerializeField] private Tilemap _tilemap;
 		[SerializeField] private RoomProceduralGenerator _roomProceduralGenerator;
 
+		public int _personInRoomCount = 2;
+
+		public void Configure(int personInRoomCount)
+		{
+			_personInRoomCount = personInRoomCount;
+		}
+
 		public void LoadLevel()
 		{
 			GenerateEnvironment();
@@ -40,7 +47,10 @@ namespace BasicLegionInfected.Game
 			{
 				Vector3Int spawnPosition = new((int)room.center.x, (int)room.center.y, 0);
 
-				_personSpawner.Value.SpawnObject(_tilemap, spawnPosition);
+				for(int i = 0; i < _personInRoomCount; i++)
+				{
+					_personSpawner.Value.SpawnObject(_tilemap, spawnPosition);
+				}
 			}
 
 			Debug.Log("Mock PlacePerson");

@@ -16,7 +16,7 @@ namespace BasicLegionInfected.Game
 
             foreach (RaycastHit2D hit in hits)
             {
-                EffectManager effectManager = hit.collider.GetComponentInChildren<EffectManager>();
+                EffectManager effectManager = hit.collider?.GetComponentInChildren<EffectManager>();
                 if (effectManager != null && effectManager.Effects.GetValueOrDefault(_infectedEffectData) != null)
                 {
 					Debug.Log($"Cured infected at {hit.collider.name}");

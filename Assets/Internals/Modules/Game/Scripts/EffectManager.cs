@@ -1,14 +1,16 @@
-using System.Collections;
-using System;
-using System.Reflection;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BasicLegionInfected.Game
 {
     public class EffectManager : MonoBehaviour
     {
         public Dictionary<EffectData, AEffect> Effects { get; private set; } = new();
+
+		[field: SerializeField] public UnityEvent<EffectData> OnEffectAdded { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<EffectData> OnEffectRemoved { get; private set; } = new();
 
 		private void Update()
 		{
@@ -43,6 +45,8 @@ namespace BasicLegionInfected.Game
 				effect = Effects[effectData];
 				effect.Activate();
 				effect.ApplyEffect();
+
+				OnEffectAdded.Invoke(effectData);
 			}
 		}
 
@@ -55,6 +59,8 @@ namespace BasicLegionInfected.Game
 
 			effect.End();
 			Effects.Remove(effectData);
+
+			OnEffectRemoved.Invoke(effectData);
 		}
 	}
 }

@@ -38,7 +38,7 @@ namespace BasicLegionInfected.Game.Infected
 			{
 				if (hit.collider == _effectedCollider) continue;
 
-				Debug.Log($"InfectedEffect from {transform.parent.name} touch {hit.collider.name}");
+				//Debug.Log($"InfectedEffect from {transform.parent.name} touch {hit.collider.name}");
 
 				EffectManager effectManager = hit.collider.GetComponentInChildren<EffectManager>();
 

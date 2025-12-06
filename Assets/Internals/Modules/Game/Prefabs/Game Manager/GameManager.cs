@@ -20,9 +20,15 @@ namespace BasicLegionInfected.Game
 			OnGameReady.Invoke();
 		}
 
+		private void OnSessionClose()
+		{
+			PlayGame();
+		}
+
 		public void PlayGame()
 		{
 			_currentSession = _sessionManager.CreateGameSession();
+			_currentSession.OnClose.AddListener(OnSessionClose);
 		}
 
 		public void ExitGame()

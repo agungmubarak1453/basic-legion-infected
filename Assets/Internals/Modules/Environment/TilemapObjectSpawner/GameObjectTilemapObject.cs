@@ -25,7 +25,7 @@ namespace BasicLegionInfected.Environment.TilemapObjectSpawners
 		{
 			foreach(GameObject gameObject in _gameObjects)
 			{
-				GameObject.Destroy(gameObject);
+				Object.DestroyImmediate(gameObject);
 			}
 
 			_gameObjects.Clear();

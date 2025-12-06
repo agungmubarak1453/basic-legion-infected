@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace BasicLegionInfected.Game
 {
-    public class Session : MonoBehaviour
+    public class Session
     {
         private LevelManager _levelManager;
 
@@ -17,7 +17,7 @@ namespace BasicLegionInfected.Game
 
         public UnityEvent OnClose { get; private set; } = new();
 
-		public void Initialize(
+		public Session(
             LevelManager levelManager, EffectData infectedEffectData, int startingInfectedCount
         ) {
             _levelManager = levelManager;
@@ -25,14 +25,15 @@ namespace BasicLegionInfected.Game
             StartingInfectedCount = startingInfectedCount;
         }
 
-        public void Start()
+        public void OnStart()
         {
             _levelManager.LoadLevel();
 
             Person[] persons = _levelManager.GetComponentsInChildren<Person>();
 
             int neeededInfectedCount = StartingInfectedCount;
-            foreach (Person person in persons)
+
+			foreach (Person person in persons)
             {
                 CurrentPersontCount += 1;
 
@@ -50,7 +51,11 @@ namespace BasicLegionInfected.Game
             }
 		}
 
-        private void OnPersonEffectAdded(EffectData effectData)
+        public void OnUpdate() { }
+
+        public void OnFixedUpdate() { }
+
+		private void OnPersonEffectAdded(EffectData effectData)
         {
             if( effectData == _infectedEffectData)
             {

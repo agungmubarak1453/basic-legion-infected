@@ -9,14 +9,17 @@ namespace BasicLegionInfected.Game
         private LevelManager _levelManager;
 
 		private EffectData _infectedEffectData;
-        public int _infectedCount;
+        public int StartingInfectedCount;
+
+        public int CurrentPersontCount { get; private set; } = 0;
+		public int CurrentInfectedCount { get; private set; } = 0;
 
 		public void Initialize(
-            LevelManager levelManager, EffectData infectedEffectData, int infectedCount
+            LevelManager levelManager, EffectData infectedEffectData, int startingInfectedCount
         ) {
             _levelManager = levelManager;
             _infectedEffectData = infectedEffectData;
-            _infectedCount = infectedCount;
+            StartingInfectedCount = startingInfectedCount;
         }
 
         public void Start()
@@ -25,21 +28,44 @@ namespace BasicLegionInfected.Game
 
             Person[] persons = _levelManager.GetComponentsInChildren<Person>();
 
-            int neeededInfectedCount = _infectedCount;
+            int neeededInfectedCount = StartingInfectedCount;
             foreach (Person person in persons)
             {
-                if (neeededInfectedCount > 0)
+                CurrentPersontCount += 1;
+
+                EffectManager effectManager = person.GetComponentInChildren<EffectManager>();
+
+                effectManager.OnEffectAdded.AddListener(OnPersonEffectAdded);
+                effectManager.OnEffectRemoved.AddListener(OnPersonEffectRemoved);
+
+				if (neeededInfectedCount > 0)
                 {
-                    EffectManager effectManager = person.GetComponentInChildren<EffectManager>();
                     effectManager.AddEffect(_infectedEffectData);
 
 					neeededInfectedCount--;
                 }
-                else
-                {
-                    break;
-                }
             }
+		}
+
+        private void OnPersonEffectAdded(EffectData effectData)
+        {
+            if( effectData == _infectedEffectData)
+            {
+                CurrentInfectedCount += 1;
+			}
+		}
+
+        private void OnPersonEffectRemoved(EffectData effectData)
+        {
+			if (effectData == _infectedEffectData)
+			{
+				CurrentInfectedCount -= 1;
+
+                if (CurrentInfectedCount <= 0)
+                {
+                    Close();
+				}
+			}
 		}
 
         public void Close()

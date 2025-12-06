@@ -1,6 +1,7 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BasicLegionInfected.Game
 {
@@ -13,6 +14,8 @@ namespace BasicLegionInfected.Game
 
         public int CurrentPersontCount { get; private set; } = 0;
 		public int CurrentInfectedCount { get; private set; } = 0;
+
+        public UnityEvent OnClose { get; private set; } = new();
 
 		public void Initialize(
             LevelManager levelManager, EffectData infectedEffectData, int startingInfectedCount
@@ -70,7 +73,7 @@ namespace BasicLegionInfected.Game
 
         public void Close()
         {
-            throw new NotImplementedException();
-        }
+            OnClose.Invoke();
+		}
     }
 }

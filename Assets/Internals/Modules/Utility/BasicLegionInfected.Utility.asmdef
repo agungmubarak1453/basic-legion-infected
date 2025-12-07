@@ -1,10 +1,8 @@
 {
-    "name": "BasicLegionInfected.Environment",
-    "rootNamespace": "BasicLegionInfected.Environment",
+    "name": "BasicLegionInfected.Utility",
+    "rootNamespace": "BasicLegionInfected.Utility",
     "references": [
-        "GUID:31976cc9e85bdd9459e856fcb40d0d50",
-        "GUID:8a7e10c9049051f42a783ef77116d7b5",
-        "GUID:d16657d08d7a030489f9d0a44f66c470"
+        "GUID:8a7e10c9049051f42a783ef77116d7b5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

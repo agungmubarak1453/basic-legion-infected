@@ -12,6 +12,13 @@ namespace BasicLegionInfected.Environment
 		public UnityEvent OnOpen = new();
 		public UnityEvent OnClose = new();
 
+		private string _initialTag;
+
+		private void Awake()
+		{
+			_initialTag = gameObject.tag;
+		}
+
 		private void Start()
 		{
 			Close();
@@ -33,12 +40,16 @@ namespace BasicLegionInfected.Environment
 		{
 			_collider.isTrigger = true;
 
+			gameObject.tag = "Accesser";
+
 			OnOpen.Invoke();
 		}
 
 		public void Close()
 		{
 			_collider.isTrigger = false;
+
+			gameObject.tag = _initialTag;
 
 			OnClose.Invoke();
 		}

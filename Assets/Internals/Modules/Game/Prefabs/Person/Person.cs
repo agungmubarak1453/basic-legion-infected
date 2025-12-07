@@ -6,12 +6,12 @@ namespace BasicLegionInfected.Game
 {
 	public class Person : MonoBehaviour, IAccesserUser
 	{
-		[SerializeField] private Rigidbody2D _rigidbody;
+		[SerializeField] private Collider2D _collider2D;
 
 		public float Speed = 5f;
 		public float ChangeDirectionIntervalSecond = 2f;
 
-		private Vector2 _randomDirection;
+		private Vector2 _direction;
 		private float _directionTimer = 0f;
 
 		private float _detectionRadius = 2f;
@@ -41,18 +41,41 @@ namespace BasicLegionInfected.Game
 				_canDetect = true;
 				_detectionTimer = 0f;
 			}
+
+			transform.Translate(Speed * Time.deltaTime * _direction);
 		}
 
 		private void FixedUpdate()
 		{
-			_rigidbody.velocity = _randomDirection * Speed;
+			RaycastHit2D[] hits;
 
-			if (!_canDetect) return;
+			Vector2 collisionBound = _collider2D.bounds.size;
 
-			RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _detectionRadius, Vector2.zero);
+			float collisionRadius = (Mathf.Max(collisionBound.x, collisionBound.y) + 0.1f)/ 2;
+			hits = Physics2D.CircleCastAll(transform.position, collisionRadius, Vector2.zero);
 
 			foreach (RaycastHit2D hit in hits)
 			{
+				if (hit.collider == _collider2D) continue;
+
+				if (hit.collider.CompareTag("Unwalkable"))
+				{
+					//Debug.DrawLine(transform.position, hit.point, Color.red);
+
+					Vector3 hitDirection = ((Vector3)hit.point - transform.position).normalized;
+
+					_direction = -hitDirection;
+				}
+			}
+
+			if (!_canDetect) return;
+
+			hits = Physics2D.CircleCastAll(transform.position, _detectionRadius, Vector2.zero);
+
+			foreach (RaycastHit2D hit in hits)
+			{
+				if (hit.collider == _collider2D) continue;
+
 				if (hit.collider.CompareTag("Accesser"))
 				{
 					IAccesser accesser = hit.collider.GetComponentInChildren<IAccesser>();
@@ -74,7 +97,7 @@ namespace BasicLegionInfected.Game
 		public void ChangeDirection()
 		{
 			float angle = Random.Range(0f, 360f);
-			_randomDirection = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+			_direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
 		}
 
 		public void Move(Vector3 newPosition)

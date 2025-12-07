@@ -581,6 +581,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2023830809}
     m_Modifications:
+    - target: {fileID: 2572809117935842705, guid: c2b673ed50b2616498115ecb25e27cf3, type: 3}
+      propertyPath: m_TagString
+      value: Unwalkable
+      objectReference: {fileID: 0}
     - target: {fileID: 9097452140003200242, guid: c2b673ed50b2616498115ecb25e27cf3, type: 3}
       propertyPath: m_Name
       value: Tilemap Platform

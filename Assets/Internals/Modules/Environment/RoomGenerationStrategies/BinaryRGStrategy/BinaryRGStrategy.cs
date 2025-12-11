@@ -10,12 +10,14 @@ namespace BasicLegionInfected.Environment.RoomGenerationStrategies
 	{
 		public void Execute(List<RectInt> rooms, Tilemap tilemap, ITilemapObjectSpawner wallTileSpawner, ITilemapObjectSpawner doorTileSpawner, int levelWidth, int levelHeight, int roomMinSize, int roomMaxSize, int roomCount)
 		{
-			Vector2Int initialPosition = new(- (levelWidth / 2), - (levelHeight / 2));
-			Vector2Int initialSize = new(levelWidth, levelHeight);
+			int size = roomMinSize * roomCount;
+
+			Vector2Int initialSize = new(size, size);
+			Vector2Int initialPosition = new(- (initialSize.x / 2), - (initialSize.y / 2));
 
 			Room initialRoom = new (new RectInt(initialPosition, initialSize));
 
-			Room[] createdRooms = SplitRoom(initialRoom, roomMinSize, roomMaxSize, roomCount);
+			Room[] createdRooms = SplitRoom(initialRoom, roomMinSize, roomCount);
 
 			List<Vector3Int> willBeRemovedTilePosition = new();
 
@@ -99,8 +101,10 @@ namespace BasicLegionInfected.Environment.RoomGenerationStrategies
 			}
 		}
 
-		private Room[] SplitRoom(Room room, int roomMinSize, int roomMaxSize, int neededRoomCount)
+		private Room[] SplitRoom(Room room, int roomMinSize, int neededRoomCount)
 		{
+			Debug.Log($"Needed room count {neededRoomCount}");
+
 			if (neededRoomCount == 1)
 			{
 				return new Room[] { room };
@@ -108,8 +112,10 @@ namespace BasicLegionInfected.Environment.RoomGenerationStrategies
 
 			bool isHorizontalSplit = Random.value > 0.5f;
 
-			int width = isHorizontalSplit ? Random.Range(roomMinSize, room.Rect.width) : room.Rect.width;
-			int height = isHorizontalSplit ? room.Rect.height : Random.Range(roomMinSize, room.Rect.height);
+			if (isHorizontalSplit && room.Rect.width < roomMinSize * 2) isHorizontalSplit = false;
+
+			int width = isHorizontalSplit ? Random.Range(roomMinSize, room.Rect.width - roomMinSize) : room.Rect.width;
+			int height = isHorizontalSplit ? room.Rect.height : Random.Range(roomMinSize, room.Rect.height - roomMinSize);
 
 			Vector2Int splitPosition = room.Rect.position;
 			Vector2Int splitSize = new(width, height);
@@ -134,27 +140,45 @@ namespace BasicLegionInfected.Environment.RoomGenerationStrategies
 				splitPosition2.x = splitPosition.x;
 			}
 
-			if (splitSize2.x < roomMinSize || splitSize2.y < roomMinSize)
-			{
-				return new Room[] { room };
-			}
-
 			Room room1 = new(new RectInt(splitPosition, splitSize));
 			Room room2 = new(new RectInt(splitPosition2, splitSize2));
 
 			Debug.Log($"Split: {room1.Rect.size} & {room2.Rect.size}");
-			Debug.Log($"newNeededRoomCount: {neededRoomCount}");
 
 			if (
 				neededRoomCount > 1
 			) {
-				return SplitRoom(room1, roomMinSize, Mathf.Min(room1.Rect.width, room1.Rect.height), neededRoomCount / 2).Concat(
-					SplitRoom(room2, roomMinSize, Mathf.Min(room2.Rect.width, room2.Rect.height), neededRoomCount / 2)
-				).ToArray();
+				bool canRoom1Splits = room1.Rect.width >= 2 * roomMinSize || room1.Rect.height > 2 * roomMinSize;
+				bool canRoom2Splits = room2.Rect.width >= 2 * roomMinSize || room2.Rect.height > 2 * roomMinSize;
+
+				Room[] splitRooms1;
+				Room[] splitRooms2;
+
+				if (canRoom1Splits)
+				{
+					splitRooms1 = SplitRoom(room1, roomMinSize, Mathf.CeilToInt(neededRoomCount / 2));
+				}
+				else
+				{
+					splitRooms1 = new Room[] { room1 };
+				}
+
+				if (canRoom2Splits)
+				{
+					splitRooms2 = SplitRoom(room2, roomMinSize, neededRoomCount - splitRooms1.Length);
+				}
+				else
+				{
+					splitRooms2 = new Room[] { room2 };
+				}
+
+				Debug.Log($"Split room to {splitRooms1.Length} and {splitRooms2.Length} rooms");
+
+				return splitRooms1.Concat(splitRooms2).ToArray();
 			}
-			else
+			else // This will handle for case needed room count < 1
 			{
-				return new Room[] { room1, room2 };
+				return new Room[0];
 			}
 		}
 

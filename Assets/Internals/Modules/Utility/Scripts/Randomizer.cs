@@ -6,6 +6,17 @@ namespace BasicLegionInfected.Utility
 {
     public static class Randomizer
     {
+		public static void Shuffle<T>(T[] array)
+		{
+			for (int i = 0; i < array.Length; i++)
+			{
+				int randomIndex = Random.Range(i, array.Length);
+				T temp = array[i];
+				array[i] = array[randomIndex];
+				array[randomIndex] = temp;
+			}
+		}
+
 		public static Vector3 GetRandomPointInOval(Vector2Int size)
 		{
 			float theta = Random.Range(0, 2 * Mathf.PI);

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 using BasicLegionInfected.Input;
 
@@ -12,17 +14,24 @@ namespace BasicLegionInfected.Game
         [SerializeField] private PlayerManager _playerManager;
 
 		[SerializeField] private Camera _playerCamera;
+
+		public float Sensitivity = 0.5f;
+
+		private Vector3 _latestMousePosition;
 		private Vector3 _targetCameraPosition;
+
 		public float ZoomSpeed = 1f;
 		public float MinCameraSize = 2f;
 		public float MaxCameraSize = 20f;
 		private float _targetCameraSize;
 
-		[SerializeField] private GameObject mouseVisualizer;
+		[SerializeField] Slider _energySlider;
+
+		[SerializeField] private GameObject mouseCureVisualizer;
 
 		private void Start()
 		{
-			InputManager.Instance.OnSwipe.AddListener(MoveCamera);
+			InputManager.Instance.OnHold.AddListener(MoveCamera);
 			InputManager.Instance.OnHover.AddListener(ShowCurePositioning);
 			InputManager.Instance.OnClick.AddListener(Cure);
 
@@ -43,13 +52,20 @@ namespace BasicLegionInfected.Game
 				_targetCameraSize,
 				Time.deltaTime * 10f
 			);
+
+			_energySlider.value = _playerManager.EnergyManager.Energy / 100;
 		}
 
 		private void OnDisable()
 		{
-			InputManager.Instance.OnSwipe.RemoveListener(MoveCamera);
+			InputManager.Instance.OnHold.RemoveListener(MoveCamera);
 			InputManager.Instance.OnHover.RemoveListener(ShowCurePositioning);
 			InputManager.Instance.OnClick.RemoveListener(Cure);
+		}
+
+		private void OnInputClick(Vector3 mous)
+		{
+
 		}
 
 		public void ZoomIn()
@@ -74,15 +90,27 @@ namespace BasicLegionInfected.Game
 			_targetCameraSize = newCameraSize;
 		}
 
-		private void MoveCamera(Vector3 swipeDirection)
+		private void MoveCamera(Vector3 mousePosition, InputManager.HoldState holdState)
 		{
-			Vector3 zeroScreenPositionInWorldPosition = _playerCamera.ScreenToWorldPoint(Vector3.zero);
-			Vector3 swipeWorldDirection = _playerCamera.ScreenToWorldPoint(swipeDirection) - zeroScreenPositionInWorldPosition;
-			swipeWorldDirection.z = 0f;
+			switch (holdState)
+			{
+				case InputManager.HoldState.Start:
+					_latestMousePosition = mousePosition;
+					break;
+				case InputManager.HoldState.InHolding:
+					Vector3 deltaMousePosition = mousePosition - _latestMousePosition;
 
-			Debug.Log($"Swiped with direction {swipeDirection} - {swipeWorldDirection}");
+					Vector3 zeroScreenPositionInWorldPosition = _playerCamera.ScreenToWorldPoint(Vector3.zero);
+					Vector3 swipeWorldDirection = _playerCamera.ScreenToWorldPoint(deltaMousePosition) - zeroScreenPositionInWorldPosition;
+					swipeWorldDirection.z = 0f;
 
-			_targetCameraPosition = _playerCamera.transform.position - swipeWorldDirection;
+					//Debug.Log($"Swiped with direction {deltaMousePosition} - {swipeWorldDirection}");
+
+					_targetCameraPosition = _playerCamera.transform.position - swipeWorldDirection * Sensitivity;
+					break;
+				case InputManager.HoldState.End:
+					break;
+			}
 		}
 
 		private void Cure(Vector3 mouseScreenPosition)
@@ -95,22 +123,23 @@ namespace BasicLegionInfected.Game
 
 		private void ShowCurePositioning(Vector3 mouseScreenPosition)
 		{
-			// Check mouse outside of screen
+			// Check mouse outside of screen and energy availability
 			if (
+				_playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
 				mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
 				mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height
 			)
 			{
-				mouseVisualizer.SetActive(false);
+				mouseCureVisualizer.SetActive(false);
 				return;
 			}
 
 			Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 			mouseWorldPosition.z = 0f;
 
-			mouseVisualizer.SetActive(true);
-			mouseVisualizer.transform.localScale = new Vector3(_playerManager.CureRadius, _playerManager.CureRadius, mouseVisualizer.transform.localScale.z);
-			mouseVisualizer.transform.position = mouseWorldPosition;
+			mouseCureVisualizer.SetActive(true);
+			mouseCureVisualizer.transform.localScale = new Vector3(_playerManager.CureRadius * 2, _playerManager.CureRadius * 2, mouseCureVisualizer.transform.localScale.z);
+			mouseCureVisualizer.transform.position = mouseWorldPosition;
 		}
 	}
 }

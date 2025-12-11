@@ -51,6 +51,12 @@ MonoBehaviour:
     _underlyingValue: {fileID: 742392149250864583}
   _tilemap: {fileID: 0}
   _roomProceduralGenerator: {fileID: 529793058502353597}
+  LevelWidth: 50
+  LevelHeight: 50
+  RoomMinSize: 5
+  RoomMaxSize: 10
+  RoomCount: 5
+  PersonInRoomCount: 2
 --- !u!114 &529793058502353597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a185b1470a1d3904797cb10b46572173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 2317574746785603490, guid: 17fb6f0ac19776b4c8a0e1504538cc2b, type: 3}
+  Prefab: {fileID: 4972919637895417923, guid: 300bc82ba30363147b40b3fb90d73d98, type: 3}
 --- !u!114 &742392149250864583
 MonoBehaviour:
   m_ObjectHideFlags: 0

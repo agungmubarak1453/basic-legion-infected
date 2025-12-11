@@ -3,35 +3,49 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+using BasicLegionInfected.Utility;
+using BasicLegionInfected.Environment;
+
 namespace BasicLegionInfected.Game
 {
     public class Session
     {
         private LevelManager _levelManager;
+        private PlayerManager _playerManager;
 
 		private EffectData _infectedEffectData;
-        public int StartingInfectedCount;
 
-        public int CurrentPersontCount { get; private set; } = 0;
+        public int RoomCount = 16;
+		public int PersonInRoomCount = 3;
+        public int StartingInfectedCount = 5;
+
+		public int CurrentPersontCount { get; private set; } = 0;
 		public int CurrentInfectedCount { get; private set; } = 0;
 
         public UnityEvent OnClose { get; private set; } = new();
 
-		public Session(
-            LevelManager levelManager, EffectData infectedEffectData, int startingInfectedCount
+        public Session(
+            LevelManager levelManager, PlayerManager playerManager, EffectData infectedEffectData
         ) {
             _levelManager = levelManager;
+            _playerManager = playerManager;
             _infectedEffectData = infectedEffectData;
-            StartingInfectedCount = startingInfectedCount;
         }
 
-        public void OnStart()
+        private void OnStart()
         {
+            _playerManager.Clear();
+
+            _levelManager.RoomCount = RoomCount;
+            _levelManager.PersonInRoomCount = PersonInRoomCount;
+
             _levelManager.LoadLevel();
 
             Person[] persons = _levelManager.GetComponentsInChildren<Person>();
+			GameDoor[] doors = _levelManager.GetComponentsInChildren<GameDoor>();
 
-            int neeededInfectedCount = StartingInfectedCount;
+			int neeededInfectedCount = StartingInfectedCount;
+            Randomizer.Shuffle(persons); // To select random person
 
 			foreach (Person person in persons)
             {
@@ -48,6 +62,11 @@ namespace BasicLegionInfected.Game
 
 					neeededInfectedCount--;
                 }
+            }
+
+            foreach (GameDoor door in doors)
+            {
+                door.Open();
             }
 		}
 
@@ -75,6 +94,11 @@ namespace BasicLegionInfected.Game
 				}
 			}
 		}
+
+        public void Start()
+        {
+            OnStart();
+        }
 
         public void Close()
         {

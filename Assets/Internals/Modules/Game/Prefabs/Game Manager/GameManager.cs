@@ -15,6 +15,8 @@ namespace BasicLegionInfected.Game
 
 		public UnityEvent OnGameReady = new();
 
+		private int _currentLevel;
+
 		private void Start()
 		{
 			OnGameReady.Invoke();
@@ -22,18 +24,50 @@ namespace BasicLegionInfected.Game
 
 		private void OnSessionClose()
 		{
-			PlayGame();
+			LevelUp();
 		}
 
 		public void PlayGame()
 		{
 			_currentSession = _sessionManager.CreateGameSession();
 			_currentSession.OnClose.AddListener(OnSessionClose);
+
+			_currentLevel = 1;
+			ConfigureSessionToLevel(_currentSession, _currentLevel);
+
+			_currentSession.Start();
+		}
+
+		public void LevelUp()
+		{
+			_currentLevel++;
+
+			_currentSession = _sessionManager.CreateGameSession();
+			_currentSession.OnClose.AddListener(OnSessionClose);
+
+			ConfigureSessionToLevel(_currentSession, _currentLevel);
+
+			_currentSession.Start();
 		}
 
 		public void ExitGame()
 		{
 			_currentSession?.Close();
+		}
+
+		private void ConfigureSessionToLevel(Session session, int level)
+		{
+			int roomCount = Mathf.FloorToInt(1f + Mathf.Log(level, 1.3f) / 4f);
+			//Debug.Log($"1f + Mathf.Log(level, 1.1f) / 4f): {1f + Mathf.Log(level, 1.1f) / 4f}");
+			int personRoomCount = 2;
+			int infectedCount = Mathf.CeilToInt(roomCount / 2f);
+			//Debug.Log($"roomCount / 2: {roomCount / 2}");
+
+			Debug.Log($"roomCount: {roomCount} personRoomCount:{personRoomCount} infectedCount:{infectedCount}");
+
+			session.RoomCount = roomCount;
+			session.PersonInRoomCount = personRoomCount;
+			session.StartingInfectedCount = infectedCount;
 		}
 	}
 }

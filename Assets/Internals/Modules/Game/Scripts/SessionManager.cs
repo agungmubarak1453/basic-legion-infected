@@ -26,11 +26,10 @@ namespace BasicLegionInfected.Game
         public Session CreateGameSession()
         {
             LevelManager levelManager = FindObjectOfType<LevelManager>();
+			PlayerManager playerManager = FindObjectOfType<PlayerManager>();
 
-            _currentSession = new(levelManager, _infectedEffectData, 2);
+            _currentSession = new(levelManager, playerManager, _infectedEffectData);
 			_currentSession.OnClose.AddListener(OnSessionClose);
-
-            _currentSession.OnStart();
 
 			return _currentSession;
         }

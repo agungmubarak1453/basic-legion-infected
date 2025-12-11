@@ -1,3 +1,4 @@
+using BasicLegionInfected.Input;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -6,23 +7,48 @@ namespace BasicLegionInfected.Game
 {
     public class PlayerManager : MonoBehaviour
     {
-        [SerializeField] private EffectData _infectedEffectData;
+        [SerializeField] private GameObject _curerPrefab;
 
-        public float CureRadius = 3f;
+        [field: SerializeField] public EnergyManager EnergyManager { get; private set; }
+        [SerializeField] private EnergyUser _energyUser;
+
+        public float EnergyRecoverySpeed = 2f;
+
+		public float CureRadius = 3f;
+        public float CureEnergy = 20f;
+
+		private void Update()
+		{
+            EnergyManager.Energy += EnergyRecoverySpeed * Time.deltaTime;
+		}
 
 		public void Cure(Vector3 position)
         {
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(position, CureRadius, Vector2.zero);
-
-            foreach (RaycastHit2D hit in hits)
+            if (!_energyUser.TryUseEnergy(CureEnergy))
             {
-                EffectManager effectManager = hit.collider?.GetComponentInChildren<EffectManager>();
-                if (effectManager != null && effectManager.Effects.GetValueOrDefault(_infectedEffectData) != null)
-                {
-					Debug.Log($"Cured infected at {hit.collider.name}");
-					effectManager.RemoveEffect(_infectedEffectData);
-                }
-			}
-		}
+                return;
+            }
+
+            GameObject gameObject = GameObject.Instantiate(
+                _curerPrefab, position, Quaternion.identity, transform
+            );
+
+            Curer curer = gameObject.GetComponentInChildren<Curer>();
+            curer.CureRadius = CureRadius;
+        }
+
+        public void Clear()
+        {
+            Curer[] curers = GetComponentsInChildren<Curer>();
+
+			foreach (Curer curer in curers)
+            {
+                DestroyImmediate(curer.gameObject);
+            }
+
+            EnergyManager.Energy = 100f;
+
+            InputManager.Instance.IsInputBlocked = false;
+        }
     }
 }

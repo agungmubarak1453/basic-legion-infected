@@ -21,7 +21,7 @@ namespace BasicLegionInfected.Environment.RoomGenerationStrategies
             {
                 RoomConnection otherExistingConnection = otherRoom.GetConnectionToThis(this);
 
-                Debug.Log($"Existing connection from room {Rect}: {otherExistingConnection}");
+                //Debug.Log($"Existing connection from room {Rect}: {otherExistingConnection}");
 
 				if (otherExistingConnection == null)
                 {

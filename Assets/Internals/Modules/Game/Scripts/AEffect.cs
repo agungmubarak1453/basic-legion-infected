@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BasicLegionInfected.Game
 {
@@ -9,6 +11,8 @@ namespace BasicLegionInfected.Game
     {
 		private bool _isPermanent = false;
 		private float _timer;
+
+		public UnityEvent OnEnd = new();
 
 		public virtual void Initialize(EffectData effectData)
 		{
@@ -47,6 +51,7 @@ namespace BasicLegionInfected.Game
 
 		public virtual void End()
 		{
+			OnEnd.Invoke();
 			GameObject.Destroy(gameObject);
 		}
 	}

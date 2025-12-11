@@ -9,7 +9,7 @@ namespace BasicLegionInfected.Game
 		private SpriteRenderer _spriteRenderer;
 		private Color _oldColor;
 
-		private void Start()
+		private void Awake()
 		{
 			_spriteRenderer = transform.parent.GetComponentInChildren<SpriteRenderer>();
 
@@ -17,7 +17,7 @@ namespace BasicLegionInfected.Game
 			_spriteRenderer.color = _infectedColor;
 		}
 
-		private void OnDestroy()
+		public void Revert()
 		{
 			_spriteRenderer.color = _oldColor;
 		}

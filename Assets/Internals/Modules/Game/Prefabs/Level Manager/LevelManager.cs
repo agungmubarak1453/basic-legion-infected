@@ -16,12 +16,13 @@ namespace BasicLegionInfected.Game
 		[SerializeField] private Tilemap _tilemap;
 		[SerializeField] private RoomProceduralGenerator _roomProceduralGenerator;
 
-		public int _personInRoomCount = 2;
+		public int LevelWidth = 50;
+		public int LevelHeight = 50;
+		public int RoomMinSize = 5;
+		public int RoomMaxSize = 10;
+		public int RoomCount = 5;
 
-		public void Configure(int personInRoomCount)
-		{
-			_personInRoomCount = personInRoomCount;
-		}
+		public int PersonInRoomCount = 2;
 
 		public void LoadLevel()
 		{
@@ -31,6 +32,12 @@ namespace BasicLegionInfected.Game
 
 		private void GenerateEnvironment()
 		{
+			_roomProceduralGenerator.LevelWidth = LevelWidth;
+			_roomProceduralGenerator.LevelHeight = LevelHeight;
+			_roomProceduralGenerator.RoomMinSize = RoomMinSize;
+			_roomProceduralGenerator.RoomMaxSize = RoomMaxSize;
+			_roomProceduralGenerator.RoomCount = RoomCount;
+
 			_roomProceduralGenerator.Generate();
 		}
 
@@ -47,13 +54,11 @@ namespace BasicLegionInfected.Game
 			{
 				Vector3Int spawnPosition = new((int)room.center.x, (int)room.center.y, 0);
 
-				for(int i = 0; i < _personInRoomCount; i++)
+				for(int i = 0; i < PersonInRoomCount; i++)
 				{
 					_personSpawner.Value.SpawnObject(_tilemap, spawnPosition);
 				}
 			}
-
-			Debug.Log("Mock PlacePerson");
 		}
 	}
 }

@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -10
   m_Sprite: {fileID: -2413806693520163455, guid: b59c9fdac8653464dbcbf9f72000430a, type: 3}
-  m_Color: {r: 0.654902, g: 0.7882353, b: 0.34117648, a: 1}
+  m_Color: {r: 0.5176471, g: 0.64705884, b: 0.6156863, a: 0.627451}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crossPlatformInputEventHelper: {fileID: 8536222658827261506}
   _doorSprite: {fileID: 8708530242367867899}
-  _beforeClosedColor: {r: 0.7372549, g: 0.2784314, b: 0.28627452, a: 0.627451}
+  _beforeClosedColor: {r: 0.9490196, g: 0.5176471, b: 0.50980395, a: 1}
   _notificationBeforeCloseColorTimeSecond: 2
   _enoughEnergyVisualizer: {fileID: 1297863898992535028}
   <GameDoor>k__BackingField: {fileID: 5465743495616325415}

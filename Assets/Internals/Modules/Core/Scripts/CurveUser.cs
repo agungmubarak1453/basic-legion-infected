@@ -59,7 +59,8 @@ namespace BasicLegionInfected.Core
             if (IsPlaying)
             {
                 float timeElapsedSeconds = Time.time - StartTime;
-                float normalizedTimeElapsedSeconds = Mathf.Clamp01(timeElapsedSeconds / DurationSeconds);
+                float latestCycleTimeElapsedSeconds = timeElapsedSeconds % DurationSeconds;
+                float normalizedTimeElapsedSeconds = Mathf.Clamp01(latestCycleTimeElapsedSeconds / DurationSeconds);
                 float value = Curve.Evaluate(normalizedTimeElapsedSeconds);
 
                 return value;

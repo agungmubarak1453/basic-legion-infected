@@ -53,7 +53,8 @@ namespace BasicLegionInfected.Game
 				Time.deltaTime * 10f
 			);
 
-			_energySlider.value = _playerManager.EnergyManager.Energy / 100;
+			float energyTargetValue = _playerManager.EnergyManager.Energy / 100f;
+            _energySlider.value = Mathf.Lerp(_energySlider.value, energyTargetValue, 0.1f);
 		}
 
 		private void OnDisable()

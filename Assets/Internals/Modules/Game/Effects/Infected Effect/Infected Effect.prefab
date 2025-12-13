@@ -47,19 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnEnd:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4724452701883234658}
-        m_TargetAssemblyTypeName: BasicLegionInfected.Game.InfectedEffectView, BasicLegionInfected.Game
-        m_MethodName: Revert
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   InfectedEffectData: {fileID: 11400000, guid: f826fcd5c0e37f243b8bcd4f6ebcb012, type: 2}
   DetectionRadius: 1.5
 --- !u!114 &4724452701883234658
@@ -74,4 +62,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d48b2afe560db4782d06b97527b9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _infectedEffect: {fileID: 5725172312268217210}
   _infectedColor: {r: 0.9490196, g: 0.5176471, b: 0.50980395, a: 1}

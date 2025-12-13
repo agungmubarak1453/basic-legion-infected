@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942565346334971547}
   - component: {fileID: 6282635201055162719}
+  - component: {fileID: 2585389781826253415}
   m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
@@ -34,11 +35,11 @@ RectTransform:
   - {fileID: 2091425991924422121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 427, y: 0}
   m_SizeDelta: {x: 96, y: 16}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &6282635201055162719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +91,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2585389781826253415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541180113458869545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a052e3c58d264a46bc8f5e532af75db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 942565346334971547}
+  SpeedMultiplier: 1
 --- !u!1 &1765504735142713416
 GameObject:
   m_ObjectHideFlags: 0

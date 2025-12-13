@@ -42,7 +42,7 @@ namespace BasicLegionInfected.Game
 				EffectManager effectManager = hit.collider?.GetComponentInChildren<EffectManager>();
 				if (effectManager != null && effectManager.Effects.GetValueOrDefault(_infectedEffectData) != null)
 				{
-					Debug.Log($"Cured infected at {hit.collider.name}");
+					//Debug.Log($"Cured infected at {hit.collider.name}");
 					effectManager.RemoveEffect(_infectedEffectData);
 				}
 			}

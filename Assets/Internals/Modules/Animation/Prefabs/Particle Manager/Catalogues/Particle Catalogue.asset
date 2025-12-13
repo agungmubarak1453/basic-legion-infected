@@ -17,3 +17,7 @@ MonoBehaviour:
     Item: {fileID: 3548197681284520962, guid: 5c66ec7830c4d504d8bd89c3afc6e4bd, type: 3}
   - Code: infected
     Item: {fileID: 3548197681284520962, guid: e71ab80b76ad6df4f9cb3f10cb77bef9, type: 3}
+  - Code: collided
+    Item: {fileID: 3548197681284520962, guid: f0f2ccb99c0cfeb4f9844a4f0cb9d19c, type: 3}
+  - Code: collided_black
+    Item: {fileID: 7301544175333307535, guid: 8273975744f147f448eb007cab2d0b6a, type: 3}

@@ -1,8 +1,7 @@
-using BasicLegionInfected.Input;
-using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.Events;
+
+using BasicLegionInfected.Input;
 
 namespace BasicLegionInfected.Game
 {

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5949764557923207768}
   - component: {fileID: 8771584798988609787}
   - component: {fileID: 4636780475546427167}
-  - component: {fileID: 3788165455908342640}
   m_Layer: 5
   m_Name: Random Rock
   m_TagString: Untagged
@@ -159,16 +158,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 80
---- !u!114 &3788165455908342640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8309774817285077702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd5bcff3976e02641b488afa7c14a3f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _particleCode: collided_black

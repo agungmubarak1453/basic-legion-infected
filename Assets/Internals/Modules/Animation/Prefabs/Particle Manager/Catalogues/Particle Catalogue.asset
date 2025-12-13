@@ -15,3 +15,5 @@ MonoBehaviour:
   Items:
   - Code: cured
     Item: {fileID: 3548197681284520962, guid: 5c66ec7830c4d504d8bd89c3afc6e4bd, type: 3}
+  - Code: infected
+    Item: {fileID: 3548197681284520962, guid: e71ab80b76ad6df4f9cb3f10cb77bef9, type: 3}

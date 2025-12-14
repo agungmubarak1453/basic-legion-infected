@@ -38,6 +38,12 @@ namespace BasicLegionInfected.Game
 			LevelUp();
 		}
 
+		public void RepeatGame()
+		{
+			ExitGame();
+			PlayGame();
+		}
+
 		public void PlayGame()
 		{
 			_currentSession = _sessionManager.CreateGameSession();

@@ -16,6 +16,8 @@ namespace BasicLegionInfected.Input
 			End
 		}
 
+		[SerializeField] private GameObject _inputBlocker;
+
 		[SerializeField] public UnityEvent<Vector3> OnHover { get; private set; } = new();
 		[SerializeField] public UnityEvent<Vector3> OnClick { get; private set; } = new();
 		[SerializeField] public UnityEvent<Vector3, HoldState> OnHold { get; private set; } = new();
@@ -29,14 +31,20 @@ namespace BasicLegionInfected.Input
 		private Vector3 _swipeStartPosition;
 
 		public bool IsInputBlocked = false;
+		public bool IsOverUI { get; private set; }
 
-		private void Update()
+        private void OnEnable()
+        {
+			UnblockUIInput();
+        }
+
+        private void Update()
 		{
 			Vector3 mousePosition = UnityInput.mousePosition;
 
 			OnHover.Invoke(mousePosition);
 
-			bool isOverUI = EventSystem.current.IsPointerOverGameObject();
+			IsOverUI = EventSystem.current.IsPointerOverGameObject();
 
 			if (UnityInput.GetMouseButtonDown(0))
 			{
@@ -68,11 +76,21 @@ namespace BasicLegionInfected.Input
 				}
 				else
 				{
-					if (IsInputBlocked || isOverUI) return;
+					if (IsInputBlocked || IsOverUI) return;
 
 					OnClick.Invoke(mousePosition);
 				}
 			}
+		}
+
+        public void BlockUIInput()
+		{
+			_inputBlocker.SetActive(true);
+		}
+
+		public void UnblockUIInput()
+		{
+			_inputBlocker.SetActive(false);
 		}
 	}
 }

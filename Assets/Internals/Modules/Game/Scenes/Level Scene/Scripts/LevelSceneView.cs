@@ -17,12 +17,6 @@ namespace BasicLegionInfected.Game
             _menuButton.onClick.AddListener(OnMenuButtonClicked);
         }
 
-        private void OnEnable()
-        {
-            Menu levelMenu = MenuManager.Instance.GetMenu("level");
-            levelMenu.gameObject.SetActive(false);
-        }
-
         private void OnMenuButtonClicked()
         {
             ShowMenu();

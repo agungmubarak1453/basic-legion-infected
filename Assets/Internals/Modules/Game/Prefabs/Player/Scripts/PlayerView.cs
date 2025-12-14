@@ -139,9 +139,10 @@ namespace BasicLegionInfected.Game
 		{
 			// Check mouse outside of screen and energy availability
 			if (
-				_playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
-				mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
-				mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height
+                _playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
+                mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
+                mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height ||
+				InputManager.Instance.IsOverUI
 			)
 			{
 				mouseCureVisualizer.SetActive(false);

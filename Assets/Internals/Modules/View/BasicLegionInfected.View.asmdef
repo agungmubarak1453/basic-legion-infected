@@ -3,7 +3,8 @@
     "rootNamespace": "BasicLegionInfected.View",
     "references": [
         "GUID:42a733a5a5ef7a64fa974fc277198d7b",
-        "GUID:8a7e10c9049051f42a783ef77116d7b5"
+        "GUID:8a7e10c9049051f42a783ef77116d7b5",
+        "GUID:deef042fe24aea94d9237ed2bbd4354a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

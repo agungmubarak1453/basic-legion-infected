@@ -158,6 +158,7 @@ MonoBehaviour:
   _closeButton: {fileID: 3000477718318590667}
   _popOutAnimation: {fileID: 1609809161081063766}
   _popInAnimation: {fileID: 8362627176876589987}
+  IsHideOnStart: 1
 --- !u!114 &1609809161081063766
 MonoBehaviour:
   m_ObjectHideFlags: 0

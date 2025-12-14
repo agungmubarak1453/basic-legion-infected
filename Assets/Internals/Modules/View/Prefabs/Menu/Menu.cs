@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using BasicLegionInfected.Animation.Animations;
+using BasicLegionInfected.Input;
+
+using UnityEngine.Events;
 
 namespace BasicLegionInfected.View
 {
@@ -17,12 +20,18 @@ namespace BasicLegionInfected.View
         [SerializeField] private PopUpAnimation _popOutAnimation;
         [SerializeField] private PopInAnimation _popInAnimation;
 
+        public bool IsHideOnStart = true;
+
+        [field: SerializeField] public UnityEvent OnHide { get; private set; } = new();
+
         private void Awake()
         {
             _closeButton.onClick.AddListener(OnCloseButtonClicked);
             _popInAnimation.OnAnimationFinished.AddListener(OnPopInAnimationFinished);
 
             MenuManager.Instance.AddMenu(this);
+
+            if (IsHideOnStart) gameObject.SetActive(false);
         }
 
         private void OnCloseButtonClicked()
@@ -42,6 +51,8 @@ namespace BasicLegionInfected.View
 
         public void Show()
         {
+            InputManager.Instance.BlockUIInput();
+
             gameObject.SetActive(true);
 
             _popOutAnimation.StartAnimation();
@@ -50,6 +61,10 @@ namespace BasicLegionInfected.View
         public void Hide()
         {
             _popInAnimation.StartAnimation();
+
+            InputManager.Instance.UnblockUIInput();
+
+            OnHide.Invoke();
         }
     }
 }

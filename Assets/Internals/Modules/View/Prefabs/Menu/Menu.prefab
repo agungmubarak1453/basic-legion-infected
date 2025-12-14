@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5176471, g: 0.64705884, b: 0.6156863, a: 1}
+  m_Color: {r: 0.9647059, g: 0.7411765, b: 0.3764706, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -159,6 +159,9 @@ MonoBehaviour:
   _popOutAnimation: {fileID: 1609809161081063766}
   _popInAnimation: {fileID: 8362627176876589987}
   IsHideOnStart: 1
+  <OnHide>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1609809161081063766
 MonoBehaviour:
   m_ObjectHideFlags: 0

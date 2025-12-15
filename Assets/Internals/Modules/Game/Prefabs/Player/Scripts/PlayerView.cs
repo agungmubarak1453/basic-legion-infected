@@ -17,6 +17,9 @@ namespace BasicLegionInfected.Game
 
 		[SerializeField] private Camera _playerCamera;
 
+		private Vector3 _initialCameraPosition;
+		private float _initialCameraSize;
+
 		public float Sensitivity = 0.5f;
 
 		private Vector3 _latestMousePosition;
@@ -31,6 +34,12 @@ namespace BasicLegionInfected.Game
 
 		[SerializeField] private GameObject mouseCureVisualizer;
         [SerializeField] private TextMeshProUGUI _levelText;
+
+        private void Awake()
+        {
+			_initialCameraPosition = _playerCamera.transform.position;
+			_initialCameraSize = _playerCamera.orthographicSize;
+        }
 
         private void OnEnable()
 		{
@@ -83,6 +92,8 @@ namespace BasicLegionInfected.Game
             _levelText.text = newLevel.ToString();
 
 			if (newLevel > 1) AudioManager.Instance.PlayEffectAudio("level_up");
+
+			_targetCameraPosition = _initialCameraPosition;
         }
 
 		public void ZoomIn()

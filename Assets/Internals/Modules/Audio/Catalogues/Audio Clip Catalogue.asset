@@ -30,3 +30,6 @@ MonoBehaviour:
   - Code: level_up
     Item:
     - {fileID: 8300000, guid: 0606c9c006147ab40b9af59ded16c699, type: 3}
+  - Code: effect_test_sound
+    Item:
+    - {fileID: 8300000, guid: 40055cd57ce820a4da2a1a2074967b07, type: 3}

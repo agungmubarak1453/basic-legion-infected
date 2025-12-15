@@ -50,8 +50,9 @@ namespace BasicLegionInfected.Game
         private void OnBackToMainButtonClicked()
         {
             GameManager.Instance.ExitGame();
+            _menu.OnHide.AddListener(() => _sceneManager.LoadScene("Main Menu Scene"));
+
             _menu.Hide();
-            _sceneManager.LoadScene("Main Menu Scene");
         }
 
         private void OnSettingsMenuHide()

@@ -1,3 +1,4 @@
+using BasicLegionInfected.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,7 +29,7 @@ namespace BasicLegionInfected.Animation.Animations
 
         protected override bool CheckAnimationFinishCondition()
         {
-            return transform.localScale == _initialScale;
+            return Rounder.IsNearVector3(transform.localScale, _initialScale); ;
         }
     }
 }

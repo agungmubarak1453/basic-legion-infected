@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 
 using BasicLegionInfected.Input;
+using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Game
 {
@@ -80,6 +81,8 @@ namespace BasicLegionInfected.Game
 		private void OnGameManagerLevelChanged(int newLevel)
 		{
             _levelText.text = newLevel.ToString();
+
+			if (newLevel > 1) AudioManager.Instance.PlayEffectAudio("level_up");
         }
 
 		public void ZoomIn()

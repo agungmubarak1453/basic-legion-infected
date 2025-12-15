@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Animation
 {
@@ -13,6 +16,8 @@ namespace BasicLegionInfected.Animation
             foreach (ContactPoint2D contactPoint in collision.contacts)
             {
                 ParticleManager.Instance.SpawnParticle(_particleCode, contactPoint.point);
+
+                AudioManager.Instance.PlayEffectAudio("hit");
             }
         }
     }

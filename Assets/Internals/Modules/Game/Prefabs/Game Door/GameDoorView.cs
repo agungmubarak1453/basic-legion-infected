@@ -3,6 +3,7 @@ using UnityEngine;
 using BasicLegionInfected.Input;
 using BasicLegionInfected.Environment;
 using BasicLegionInfected.Utility;
+using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Game
 {
@@ -53,6 +54,7 @@ namespace BasicLegionInfected.Game
 
 		public void OnDoorClose()
 		{
+			AudioManager.Instance.PlayEffectAudio("door_closed");
 			_doorSprite.gameObject.SetActive(true);
 		}
 	}

@@ -36,9 +36,9 @@ namespace BasicLegionInfected.Game
             Menu settingsMenu = MenuManager.Instance.GetMenu("settings");
             settingsMenu.OnHide.AddListener(OnSettingsMenuHide);
 
-            settingsMenu.Show();
-
             _menu.Hide();
+
+            settingsMenu.Show();
         }
 
         private void OnBackToMainButtonClicked()

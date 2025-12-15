@@ -1,6 +1,3 @@
-using Codice.Client.BaseCommands;
-using System;
-
 using UnityEngine;
 
 namespace BasicLegionInfected.Core

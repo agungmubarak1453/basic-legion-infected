@@ -17,6 +17,11 @@ namespace BasicLegionInfected.Animation
             if (IsAnimationOnStart) StartAnimation();
         }
 
+        private void OnDisable()
+        {
+            _isPlaying = false;
+        }
+
         protected virtual void Update()
         {
             if (_isPlaying)

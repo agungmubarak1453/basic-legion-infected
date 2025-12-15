@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 using BasicLegionInfected.View;
 using Codice.Client.BaseCommands.CheckIn.Progress;
+using BasicLegionInfected.Input;
 
 namespace BasicLegionInfected.Game
 {
@@ -33,10 +34,15 @@ namespace BasicLegionInfected.Game
 
         private void OnSettingsButtonClicked()
         {
-            Menu settingsMenu = MenuManager.Instance.GetMenu("settings");
-            settingsMenu.OnHide.AddListener(OnSettingsMenuHide);
+            _menu.OnHide.AddListener(OnMenuHideInSettingButtonContext);
 
             _menu.Hide();
+        }
+
+        private void OnMenuHideInSettingButtonContext()
+        {
+            Menu settingsMenu = MenuManager.Instance.GetMenu("settings");
+            settingsMenu.OnHide.AddListener(OnSettingsMenuHide);
 
             settingsMenu.Show();
         }
@@ -50,10 +56,12 @@ namespace BasicLegionInfected.Game
 
         private void OnSettingsMenuHide()
         {
-            _menu.Show();
-
             Menu settingsMenu = MenuManager.Instance.GetMenu("settings");
             settingsMenu.OnHide.RemoveListener(OnSettingsMenuHide);
+
+            _menu.OnHide.RemoveListener(OnMenuHideInSettingButtonContext);
+
+            _menu.Show();
         }
 
         public void RepeatGame()

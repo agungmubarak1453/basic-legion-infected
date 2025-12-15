@@ -41,7 +41,10 @@ namespace BasicLegionInfected.View
 
         private void OnPopInAnimationFinished()
         {
+            InputManager.Instance.UnblockUIInput();
             gameObject.SetActive(false);
+
+            OnHide.Invoke();
         }
 
         private void OnDestroy()
@@ -61,10 +64,6 @@ namespace BasicLegionInfected.View
         public void Hide()
         {
             _popInAnimation.StartAnimation();
-
-            InputManager.Instance.UnblockUIInput();
-
-            OnHide.Invoke();
         }
     }
 }

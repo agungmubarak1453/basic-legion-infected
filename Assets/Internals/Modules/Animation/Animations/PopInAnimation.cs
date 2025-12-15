@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using BasicLegionInfected.Utility;
+
 namespace BasicLegionInfected.Animation.Animations
 {
     public class PopInAnimation : AAnimation
@@ -34,7 +36,7 @@ namespace BasicLegionInfected.Animation.Animations
 
         protected override bool CheckAnimationFinishCondition()
         {
-            return transform.localScale == Vector3.zero;
+            return Rounder.IsNearVector3(transform.localScale, Vector3.zero);
         }
     }
 }

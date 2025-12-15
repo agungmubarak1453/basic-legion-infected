@@ -13,5 +13,20 @@ MonoBehaviour:
   m_Name: Audio Clip Catalogue
   m_EditorClassIdentifier: 
   Items:
-  - Code: 
-    Item: {fileID: 0}
+  - Code: hit
+    Item:
+    - {fileID: 8300000, guid: eb8f74b330ee2dd46af330c1f3e4b9b7, type: 3}
+  - Code: drop
+    Item:
+    - {fileID: 8300000, guid: 40055cd57ce820a4da2a1a2074967b07, type: 3}
+  - Code: door_closed
+    Item:
+    - {fileID: 8300000, guid: 054c2100df3d14a4da3d6f4276d8d34f, type: 3}
+  - Code: cured
+    Item:
+    - {fileID: 8300000, guid: 372817429eeb4fa43be8e68602970ccf, type: 3}
+    - {fileID: 8300000, guid: 2865395b41242e34984d3c14676852fc, type: 3}
+    - {fileID: 8300000, guid: 75c3dc28d70e44843814b51b316da802, type: 3}
+  - Code: level_up
+    Item:
+    - {fileID: 8300000, guid: 0606c9c006147ab40b9af59ded16c699, type: 3}

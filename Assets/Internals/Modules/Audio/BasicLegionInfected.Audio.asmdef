@@ -1,0 +1,17 @@
+{
+    "name": "BasicLegionInfected.Audio",
+    "rootNamespace": "BasicLegionInfected.Audio",
+    "references": [
+        "GUID:8a7e10c9049051f42a783ef77116d7b5",
+        "GUID:87bff29382dbc564999e9a17beeb0d38"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

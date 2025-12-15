@@ -14,8 +14,14 @@ namespace BasicLegionInfected.Audio
         [SerializeField] private AudioSource _backgroundAudioSource;
         [SerializeField] private AudioSource _effectAudioSource;
 
-        public float BackgroundVolume = 0.5f;
-        public float EffectVolume = 0.1f;
+        public float BackgroundVolume;
+        public float EffectVolume;
+
+        private void OnEnable()
+        {
+            BackgroundVolume = PlayerPrefs.GetFloat("audio-manager_background-volume", 0.3f);
+            EffectVolume = PlayerPrefs.GetFloat("audio-manager_effect-volume", 0.5f);
+        }
 
         public void PlayBackgroundAudio(string audioCode)
         {
@@ -47,6 +53,12 @@ namespace BasicLegionInfected.Audio
             AudioClip audioClip = audioClips[Random.Range(0, audioClips.Length)];
 
             _effectAudioSource.PlayOneShot(audioClip, volumeScale);
+        }
+
+        public void SaveVolumeConfiguration()
+        {
+            PlayerPrefs.SetFloat("audio-manager_background-volume", BackgroundVolume);
+            PlayerPrefs.SetFloat("audio-manager_effect-volume", EffectVolume);
         }
     }
 }

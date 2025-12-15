@@ -69,7 +69,8 @@ namespace BasicLegionInfected.Game
 
 		public void ExitGame()
 		{
-			_currentSession?.Close();
+            _currentSession?.OnClose.RemoveListener(OnSessionClose); // Because this listener for when level up, not close the game.
+            _currentSession?.Close();
 		}
 
 		private void ConfigureSessionToLevel(Session session, int level)

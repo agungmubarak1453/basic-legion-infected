@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+
 using TMPro;
 
 using BasicLegionInfected.Input;
+using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Game
 {
@@ -14,6 +16,9 @@ namespace BasicLegionInfected.Game
         [SerializeField] private PlayerManager _playerManager;
 
 		[SerializeField] private Camera _playerCamera;
+
+		private Vector3 _initialCameraPosition;
+		private float _initialCameraSize;
 
 		public float Sensitivity = 0.5f;
 
@@ -28,12 +33,21 @@ namespace BasicLegionInfected.Game
 		[SerializeField] Slider _energySlider;
 
 		[SerializeField] private GameObject mouseCureVisualizer;
+        [SerializeField] private TextMeshProUGUI _levelText;
 
-		private void Start()
+        private void Awake()
+        {
+			_initialCameraPosition = _playerCamera.transform.position;
+			_initialCameraSize = _playerCamera.orthographicSize;
+        }
+
+        private void OnEnable()
 		{
 			InputManager.Instance.OnHold.AddListener(MoveCamera);
 			InputManager.Instance.OnHover.AddListener(ShowCurePositioning);
 			InputManager.Instance.OnClick.AddListener(Cure);
+
+			GameManager.Instance.OnCurrentLevelChanged.AddListener(OnGameManagerLevelChanged);
 
 			_targetCameraPosition = _playerCamera.transform.position;
 			_targetCameraSize = _playerCamera.orthographicSize;
@@ -53,7 +67,10 @@ namespace BasicLegionInfected.Game
 				Time.deltaTime * 10f
 			);
 
-			_energySlider.value = _playerManager.EnergyManager.Energy / 100;
+			float energyTargetValue = _playerManager.EnergyManager.Energy / 100f;
+            _energySlider.value = Mathf.Lerp(_energySlider.value, energyTargetValue, 0.1f);
+
+			
 		}
 
 		private void OnDisable()
@@ -61,12 +78,23 @@ namespace BasicLegionInfected.Game
 			InputManager.Instance.OnHold.RemoveListener(MoveCamera);
 			InputManager.Instance.OnHover.RemoveListener(ShowCurePositioning);
 			InputManager.Instance.OnClick.RemoveListener(Cure);
-		}
+
+            GameManager.Instance.OnCurrentLevelChanged.RemoveListener(OnGameManagerLevelChanged);
+        }
 
 		private void OnInputClick(Vector3 mous)
 		{
 
 		}
+
+		private void OnGameManagerLevelChanged(int newLevel)
+		{
+            _levelText.text = newLevel.ToString();
+
+			if (newLevel > 1) AudioManager.Instance.PlayEffectAudio("level_up");
+
+			_targetCameraPosition = _initialCameraPosition;
+        }
 
 		public void ZoomIn()
 		{
@@ -125,9 +153,10 @@ namespace BasicLegionInfected.Game
 		{
 			// Check mouse outside of screen and energy availability
 			if (
-				_playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
-				mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
-				mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height
+                _playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
+                mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
+                mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height ||
+				InputManager.Instance.IsOverUI
 			)
 			{
 				mouseCureVisualizer.SetActive(false);

@@ -16,6 +16,17 @@ namespace BasicLegionInfected.Game
 		public UnityEvent OnGameReady = new();
 
 		private int _currentLevel;
+		public int CurrentLevel
+		{
+			get => _currentLevel;
+			set
+			{
+				_currentLevel = value;
+
+				OnCurrentLevelChanged.Invoke(_currentLevel);
+			}
+		}
+		[field: SerializeField] public UnityEvent<int> OnCurrentLevelChanged { get; private set; } = new();
 
 		private void Start()
 		{
@@ -27,32 +38,39 @@ namespace BasicLegionInfected.Game
 			LevelUp();
 		}
 
+		public void RepeatGame()
+		{
+			ExitGame();
+			PlayGame();
+		}
+
 		public void PlayGame()
 		{
 			_currentSession = _sessionManager.CreateGameSession();
 			_currentSession.OnClose.AddListener(OnSessionClose);
 
-			_currentLevel = 1;
-			ConfigureSessionToLevel(_currentSession, _currentLevel);
+			CurrentLevel = 1;
+			ConfigureSessionToLevel(_currentSession, CurrentLevel);
 
 			_currentSession.Start();
 		}
 
 		public void LevelUp()
 		{
-			_currentLevel++;
+			CurrentLevel++;
 
 			_currentSession = _sessionManager.CreateGameSession();
 			_currentSession.OnClose.AddListener(OnSessionClose);
 
-			ConfigureSessionToLevel(_currentSession, _currentLevel);
+			ConfigureSessionToLevel(_currentSession, CurrentLevel);
 
 			_currentSession.Start();
 		}
 
 		public void ExitGame()
 		{
-			_currentSession?.Close();
+            _currentSession?.OnClose.RemoveListener(OnSessionClose); // Because this listener for when level up, not close the game.
+            _currentSession?.Close();
 		}
 
 		private void ConfigureSessionToLevel(Session session, int level)

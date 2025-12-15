@@ -1,7 +1,7 @@
-using BasicLegionInfected.Input;
-using System.Collections.Generic;
-
 using UnityEngine;
+using UnityEngine.Events;
+
+using BasicLegionInfected.Input;
 
 namespace BasicLegionInfected.Game
 {
@@ -16,6 +16,8 @@ namespace BasicLegionInfected.Game
 
 		public float CureRadius = 3f;
         public float CureEnergy = 20f;
+
+        [field: SerializeField] public UnityEvent OnClear { get; private set; } = new();
 
 		private void Update()
 		{
@@ -49,6 +51,8 @@ namespace BasicLegionInfected.Game
             EnergyManager.Energy = 100f;
 
             InputManager.Instance.IsInputBlocked = false;
+
+            OnClear.Invoke();
         }
     }
 }

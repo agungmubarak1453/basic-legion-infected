@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Game
 {
@@ -18,7 +21,12 @@ namespace BasicLegionInfected.Game
 			Timer = Duration;
 		}
 
-		private void Update()
+        private void OnEnable()
+        {
+			AudioManager.Instance.PlayEffectAudio("drop");
+        }
+
+        private void Update()
 		{
 			Timer -= Time.deltaTime;
 
@@ -42,7 +50,7 @@ namespace BasicLegionInfected.Game
 				EffectManager effectManager = hit.collider?.GetComponentInChildren<EffectManager>();
 				if (effectManager != null && effectManager.Effects.GetValueOrDefault(_infectedEffectData) != null)
 				{
-					Debug.Log($"Cured infected at {hit.collider.name}");
+					//Debug.Log($"Cured infected at {hit.collider.name}");
 					effectManager.RemoveEffect(_infectedEffectData);
 				}
 			}

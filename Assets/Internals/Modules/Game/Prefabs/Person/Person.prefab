@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4869759931457634670}
   - component: {fileID: 6085598538345064896}
+  - component: {fileID: 8420237783281159086}
   m_Layer: 0
   m_Name: Sprites
   m_TagString: Untagged
@@ -187,7 +188,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: b59c9fdac8653464dbcbf9f72000430a, type: 3}
-  m_Color: {r: 0.654902, g: 0.7882353, b: 0.34117648, a: 1}
+  m_Color: {r: 0.5176471, g: 0.64705884, b: 0.6156863, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -197,3 +198,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8420237783281159086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5371425787531657740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a052e3c58d264a46bc8f5e532af75db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 4869759931457634670}
+  IsAnimationOnStart: 1
+  SpeedMultiplier: 1
+  <OnAnimationFinished>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []

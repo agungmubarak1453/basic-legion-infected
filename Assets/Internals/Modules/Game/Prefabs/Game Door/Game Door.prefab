@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5419797179073840470}
   - component: {fileID: 2907514377022979921}
+  - component: {fileID: 7478303846048757931}
   m_Layer: 0
   m_Name: Enough Energy Sprite
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -10
   m_Sprite: {fileID: -2413806693520163455, guid: b59c9fdac8653464dbcbf9f72000430a, type: 3}
-  m_Color: {r: 0.654902, g: 0.7882353, b: 0.34117648, a: 1}
+  m_Color: {r: 0.5176471, g: 0.64705884, b: 0.6156863, a: 0.627451}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -84,6 +85,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7478303846048757931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297863898992535028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a052e3c58d264a46bc8f5e532af75db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAnimationOnStart: 1
+  SpeedMultiplier: 1
+  <OnAnimationFinished>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  _transform: {fileID: 5419797179073840470}
 --- !u!1001 &7289904909007212513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crossPlatformInputEventHelper: {fileID: 8536222658827261506}
   _doorSprite: {fileID: 8708530242367867899}
-  _beforeClosedColor: {r: 0.7372549, g: 0.2784314, b: 0.28627452, a: 0.627451}
+  _beforeClosedColor: {r: 0.9490196, g: 0.5176471, b: 0.50980395, a: 1}
   _notificationBeforeCloseColorTimeSecond: 2
   _enoughEnergyVisualizer: {fileID: 1297863898992535028}
   <GameDoor>k__BackingField: {fileID: 5465743495616325415}

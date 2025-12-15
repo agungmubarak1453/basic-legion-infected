@@ -51,22 +51,22 @@ namespace BasicLegionInfected.Input
 				_holdDurationSecond = 0f;
 				_swipeStartPosition = mousePosition;
 
-				OnHold.Invoke(mousePosition, HoldState.Start);
+				if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.Start);
 			}
 
 			if (UnityInput.GetMouseButton(0))
 			{
 				_holdDurationSecond += Time.deltaTime;
 
-				OnHold.Invoke(mousePosition, HoldState.InHolding);
+                if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.InHolding);
 			}
 
 			if (UnityInput.GetMouseButtonUp(0))
 			{
 				if (_holdDurationSecond >= MinHoldDurationSecond)
 				{
-					OnHoldClick.Invoke(mousePosition);
-					OnHold.Invoke(mousePosition, HoldState.End);
+                    if (!IsOverUI) OnHoldClick.Invoke(mousePosition);
+                    if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.End);
 
 					Vector3 swipeDirection = mousePosition - _swipeStartPosition;
 					if (swipeDirection.magnitude >= MinimumSwipeDistance)

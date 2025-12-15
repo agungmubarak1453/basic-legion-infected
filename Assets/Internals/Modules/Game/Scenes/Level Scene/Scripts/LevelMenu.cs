@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using BasicLegionInfected.View;
-using Codice.Client.BaseCommands.CheckIn.Progress;
 using BasicLegionInfected.Input;
 
 namespace BasicLegionInfected.Game

@@ -22,8 +22,6 @@ namespace BasicLegionInfected.Game
         {
             get
             {
-                return false;
-
                 int isCompletedData = PlayerPrefs.GetInt($"tutorial_{Code}", 0);
 
                 if (isCompletedData == 1) return true;

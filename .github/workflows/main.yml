@@ -20,7 +20,7 @@ jobs:
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
       - name: Restore LFS cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         id: lfs-cache
         with:
           path: .git/lfs
@@ -33,12 +33,11 @@ jobs:
           git reset --hard
 
       # Cache
-      - uses: actions/cache@v3
+      - name: Restore Unity Cache
+        uses: actions/cache@v5
         with:
           path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-
+          key: ${{ runner.os }}-Library-${{ hashFiles('Packages/**', 'ProjectSettings/**') }}
 
       # Build
       # This will place the build in "build" folder

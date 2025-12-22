@@ -11,14 +11,4 @@ public class CrossPlatformInputEventHelper : MonoBehaviour
 	{
 		OnClicked.Invoke();
 	}
-
-	private void OnMouseEnter()
-	{
-		InputManager.Instance.IsInputBlocked = true;
-	}
-
-	private void OnMouseExit()
-	{
-		InputManager.Instance.IsInputBlocked = false;
-	}
 }

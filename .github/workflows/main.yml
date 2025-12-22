@@ -9,10 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Cleaning for space
-      - uses: jlumbroso/free-disk-space@main
+      - name: Clean unnecessary docker tools
+        uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true # Removes unused tools
           android-sdk: true # Frees Android bloat
+
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512 # Leave 512MB for OS. We just need more space for Unity Editor
+          swap-size-mb: 2048 # 2GB swap is perfect for Unity WebGL
 
       # Checkout
       - name: Checkout repository

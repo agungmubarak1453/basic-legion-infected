@@ -81,15 +81,8 @@
 				var h;
 
 				if (scaleToFit) {
-					w = window.innerWidth;
-					h = window.innerHeight;
-
-					var r = {{{ HEIGHT }}} / {{{ WIDTH }}};
-
-					if (w * r > window.innerHeight) {
-						w = Math.min(w, Math.ceil(h / r));
-					}
-					h = Math.floor(w * r);
+                    w = window.innerWidth;
+                    h = window.innerHeight;
 				} else {
 					w = {{{ WIDTH }}};
 					h = {{{ HEIGHT }}};

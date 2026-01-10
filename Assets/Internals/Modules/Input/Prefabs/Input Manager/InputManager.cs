@@ -16,7 +16,9 @@ namespace BasicLegionInfected.Input
 			End
 		}
 
-		[SerializeField] private GameObject _inputBlocker;
+        [SerializeField] private DeviceDetector _deviceDetector;
+
+        [SerializeField] private GameObject _inputBlocker;
 
 		[SerializeField] public UnityEvent<Vector3> OnHover { get; private set; } = new();
 		[SerializeField] public UnityEvent<Vector3> OnClick { get; private set; } = new();
@@ -33,16 +35,16 @@ namespace BasicLegionInfected.Input
 		public bool IsInputBlocked = false;
 		public bool IsOverUI { get; private set; }
 
-        private void OnEnable()
-        {
+		private void OnEnable()
+		{
 			UnblockUIInput();
-        }
+		}
 
-        private void Update()
+		private void Update()
 		{
 			Vector3 mousePosition = UnityInput.mousePosition;
 
-			OnHover.Invoke(mousePosition);
+			if (!_deviceDetector.CheckRunningOnAndroid()) OnHover.Invoke(mousePosition);
 
 			IsOverUI = EventSystem.current.IsPointerOverGameObject();
 
@@ -58,15 +60,15 @@ namespace BasicLegionInfected.Input
 			{
 				_holdDurationSecond += Time.deltaTime;
 
-                if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.InHolding);
+				if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.InHolding);
 			}
 
 			if (UnityInput.GetMouseButtonUp(0))
 			{
 				if (_holdDurationSecond >= MinHoldDurationSecond)
 				{
-                    if (!IsOverUI) OnHoldClick.Invoke(mousePosition);
-                    if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.End);
+					if (!IsOverUI) OnHoldClick.Invoke(mousePosition);
+					if (!IsOverUI) OnHold.Invoke(mousePosition, HoldState.End);
 
 					Vector3 swipeDirection = mousePosition - _swipeStartPosition;
 					if (swipeDirection.magnitude >= MinimumSwipeDistance)
@@ -78,12 +80,29 @@ namespace BasicLegionInfected.Input
 				{
 					if (IsInputBlocked || IsOverUI) return;
 
+                    // Check mouse outside of screen
+                    if (mousePosition.x < 0f || mousePosition.y < 0f ||
+						mousePosition.x > Screen.width || mousePosition.y > Screen.height)
+					{
+						return;
+					}
+
+					// Ignore click when there is input helper on there
+					Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+					RaycastHit2D hit = Physics2D.Raycast(worldMousePosition, Vector2.zero);
+
+					if (hit.collider)
+					{
+						CrossPlatformInputEventHelper inputHelper = hit.collider.GetComponentInChildren<CrossPlatformInputEventHelper>();
+						if (inputHelper != null) return;
+					}
+
 					OnClick.Invoke(mousePosition);
 				}
 			}
 		}
 
-        public void BlockUIInput()
+		public void BlockUIInput()
 		{
 			_inputBlocker.SetActive(true);
 		}

@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 8834705185037391214}
   _playerCamera: {fileID: 7844829336449760883}
-  Sensitivity: 0.32
+  Sensitivity: 0.64
   ZoomSpeed: 8
   MinCameraSize: 2
   MaxCameraSize: 40

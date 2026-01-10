@@ -43,8 +43,6 @@ namespace BasicLegionInfected.Game
 
         private void OnEnable()
 		{
-			mouseCureVisualizer.SetActive(false);
-
 			InputManager.Instance.OnHold.AddListener(MoveCamera);
 			InputManager.Instance.OnHover.AddListener(ShowCurePositioning);
 			InputManager.Instance.OnClick.AddListener(Cure);
@@ -154,7 +152,12 @@ namespace BasicLegionInfected.Game
 		private void ShowCurePositioning(Vector3 mouseScreenPosition)
 		{
 			// Check mouse outside of screen and energy availability
-			if (_playerManager.EnergyManager.Energy < _playerManager.CureEnergy)
+			if (
+                _playerManager.EnergyManager.Energy < _playerManager.CureEnergy ||
+                mouseScreenPosition.x < 0f || mouseScreenPosition.y < 0f ||
+                mouseScreenPosition.x > Screen.width || mouseScreenPosition.y > Screen.height ||
+				InputManager.Instance.IsOverUI
+			)
 			{
 				mouseCureVisualizer.SetActive(false);
 				return;

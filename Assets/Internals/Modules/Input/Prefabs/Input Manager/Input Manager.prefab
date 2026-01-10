@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2116433738308949152}
   - component: {fileID: -5761701254468568998}
-  - component: {fileID: 6693417592022242916}
   m_Layer: 0
   m_Name: Input Manager
   m_TagString: Untagged
@@ -46,23 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41a7368c93e0d64fa26df89acb73f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deviceDetector: {fileID: 6693417592022242916}
   _inputBlocker: {fileID: 8231047278371246600}
   MinHoldDurationSecond: 2
   MinimumSwipeDistance: 2
   IsInputBlocked: 0
---- !u!114 &6693417592022242916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2738455900229715902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bef1bb79420f27c42baed5c874592b89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6117899054969801993
 GameObject:
   m_ObjectHideFlags: 0

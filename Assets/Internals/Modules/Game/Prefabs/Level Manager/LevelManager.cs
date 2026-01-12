@@ -1,32 +1,42 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 using AYellowpaper;
 
+using BasicLegionInfected.Core;
 using BasicLegionInfected.Environment;
+using System;
 
 namespace BasicLegionInfected.Game
 {
 	public class LevelManager : MonoBehaviour
 	{
+		[Header("Component")]
 		[SerializeField] private InterfaceReference<ITilemapObjectSpawner> _personSpawner;
-
-		[SerializeField] private Tilemap _tilemap;
+		[field: SerializeField] public Tilemap Tilemap { get; private set; }
 		[SerializeField] private RoomProceduralGenerator _roomProceduralGenerator;
 
+		[Header("Configuration")]
 		public int LevelWidth = 50;
 		public int LevelHeight = 50;
 		public int RoomMinSize = 5;
 		public int RoomMaxSize = 10;
 		public int RoomCount = 5;
-
 		public int PersonInRoomCount = 2;
 
-		public void LoadLevel()
+		// Event
+		public AsyncEvent OnLoadEnvironmentAsyncEvent { get; private set; } = new();
+
+		public async Task LoadLevel()
 		{
+			Clear();
+
 			GenerateEnvironment();
+			await OnLoadEnvironmentAsyncEvent.InvokeAsync();
 			PlaceObjects();
 		}
 
@@ -41,6 +51,11 @@ namespace BasicLegionInfected.Game
 			_roomProceduralGenerator.Generate();
 		}
 
+		private void Clear()
+		{
+            _personSpawner.Value.DestroyAllObjects();
+        }
+
 		private void PlaceObjects()
 		{
 			PlacePerson();
@@ -48,15 +63,13 @@ namespace BasicLegionInfected.Game
 
 		private void PlacePerson()
 		{
-			_personSpawner.Value.DestroyAllObjects();
-
 			foreach (RectInt room in _roomProceduralGenerator.Rooms)
 			{
 				Vector3Int spawnPosition = new((int)room.center.x, (int)room.center.y, 0);
 
 				for(int i = 0; i < PersonInRoomCount; i++)
 				{
-					_personSpawner.Value.SpawnObject(_tilemap, spawnPosition);
+					_personSpawner.Value.SpawnObject(Tilemap, spawnPosition);
 				}
 			}
 		}

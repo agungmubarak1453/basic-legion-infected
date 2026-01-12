@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,14 +33,14 @@ namespace BasicLegionInfected.Game
             _infectedEffectData = infectedEffectData;
         }
 
-        private void OnStart()
+        private async Task OnStart()
         {
             _playerManager.Clear();
 
             _levelManager.RoomCount = RoomCount;
             _levelManager.PersonInRoomCount = PersonInRoomCount;
 
-            _levelManager.LoadLevel();
+            await _levelManager.LoadLevel();
 
             Person[] persons = _levelManager.GetComponentsInChildren<Person>();
 			GameDoor[] doors = _levelManager.GetComponentsInChildren<GameDoor>();
@@ -95,9 +96,9 @@ namespace BasicLegionInfected.Game
 			}
 		}
 
-        public void Start()
+        public async void Start()
         {
-            OnStart();
+            await OnStart();
         }
 
         public void Close()

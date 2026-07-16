@@ -20,11 +20,11 @@ namespace BasicLegionInfected.Input
 
         [SerializeField] private GameObject _inputBlocker;
 
-		[SerializeField] public UnityEvent<Vector3> OnHover { get; private set; } = new();
-		[SerializeField] public UnityEvent<Vector3> OnClick { get; private set; } = new();
-		[SerializeField] public UnityEvent<Vector3, HoldState> OnHold { get; private set; } = new();
-		[SerializeField] public UnityEvent<Vector3> OnHoldClick { get; private set; } = new();
-		[SerializeField] public UnityEvent<Vector3> OnSwipe { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<Vector3> OnHover { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<Vector3> OnClick { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<Vector3, HoldState> OnHold { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<Vector3> OnHoldClick { get; private set; } = new();
+		[field: SerializeField] public UnityEvent<Vector3> OnSwipe { get; private set; } = new();
 
 		public float MinHoldDurationSecond = 2f;
 		private float _holdDurationSecond;

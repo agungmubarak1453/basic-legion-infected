@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - chore/update-to-unity-6
 
 jobs:
   # Build with unity

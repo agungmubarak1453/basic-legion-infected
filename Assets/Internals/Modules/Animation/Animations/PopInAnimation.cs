@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using BasicLegionInfected.Utility;
+using AgungMubarak.UnityLibrary.Utility;
 
 namespace BasicLegionInfected.Animation.Animations
 {

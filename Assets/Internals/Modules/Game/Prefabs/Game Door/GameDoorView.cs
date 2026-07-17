@@ -1,8 +1,9 @@
 using UnityEngine;
 
+using AgungMubarak.UnityLibrary.Utility;
+
 using BasicLegionInfected.Input;
 using BasicLegionInfected.Environment;
-using BasicLegionInfected.Utility;
 using BasicLegionInfected.Audio;
 
 namespace BasicLegionInfected.Game

@@ -2,6 +2,7 @@
     "name": "BasicLegionInfected.Input",
     "rootNamespace": "BasicLegionInfected.Input",
     "references": [
+        "GUID:fadbcc33386ff5d4db025901647539ca",
         "GUID:8a7e10c9049051f42a783ef77116d7b5"
     ],
     "includePlatforms": [],

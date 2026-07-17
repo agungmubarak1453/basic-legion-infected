@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.agungmubarak.unitylibrary": {
+      "version": "https://github.com/agungmubarak1453/unity-library.git?path=Package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ff0335692d72fa2896a1725aa7770062b5dab810"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.5",
       "depth": 1,
@@ -170,7 +177,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.26",
+      "version": "2.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {

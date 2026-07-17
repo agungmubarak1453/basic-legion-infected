@@ -1,9 +1,10 @@
 using System;
 
+using AgungMubarak.UnityLibrary.Utility;
+
 using UnityEngine;
 using UnityEngine.Events;
 
-using BasicLegionInfected.Utility;
 using BasicLegionInfected.Environment;
 
 namespace BasicLegionInfected.Game

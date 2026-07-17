@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityInput = UnityEngine.Input;
+using UnityEngine.EventSystems;
+
+using AgungMubarak.UnityLibrary.Input;
 
 using BasicLegionInfected.Core;
-using UnityEngine.EventSystems;
 
 namespace BasicLegionInfected.Input
 {
